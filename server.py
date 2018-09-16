@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import request
 
 app = Flask(__name__) 
 
@@ -6,13 +7,14 @@ app = Flask(__name__)
 def index():
     return 'Hello' 
 
-@app.route('/request', methods=['GET', 'POST'])
+@app.route('/request', methods=['POST'])
 def process_request():
-	if request.methods == 'GET':
-		return 'GET'
-	else:
-		return 'POST: key = %s, val = %s' % (request.args.get('key'), request.args.get('val'))
-    return 'Hello'
+	print(request.is_json)
+	content = request.get_json()
+	print(content)
+	print(content['id'])
+	print(content['name'])
+	return content['name']
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
