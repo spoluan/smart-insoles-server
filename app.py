@@ -6,8 +6,8 @@ app = Flask(__name__)
 def index():
     return 'Hello' 
 
-@app.route('/request', methods=['POST'])
-def processrequest():
+@app.route('/req', methods=['POST'])
+def prreq():
     return "key %s, val %s" % (request.form['key'], request.form['val'])
 
 if __name__ == '__main__':
