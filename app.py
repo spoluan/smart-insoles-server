@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import request 
+from flask import Flask, request
 
 app = Flask(__name__) 
 
@@ -14,11 +13,9 @@ def process_request():
     elif request.method == 'POST':
         # Ref: https://scotch.io/bar-talk/processing-incoming-request-data-in-flask
         req_data = request.form 
-        heel = req_data['heel']
-        thumb = req_data['thumb']
-        outball = req_data['outball']
-        innerball = req_data['innerball']  
-        return '''heel = {}, thumb = {}, outball = {}, innerball = {}''' . format(heel, thumb, outball, innerball)
+        heel = req_data['key']
+        thumb = req_data['val'] 
+        return '''heel = {}, thumb = {}''' . format(heel, thumb)
         
         #data = request.form
         #return "Post => heel : %s, thumb: %s, out_ball: %s, inner_ball %s" % (data.get('heel'), data.get('thumb'), data.get('outball'), data.get('innerball'))
