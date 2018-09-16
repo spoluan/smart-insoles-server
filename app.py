@@ -1,6 +1,5 @@
 from flask import Flask
-from flask import request
-from flask_json import FlaskJSON, JsonError, json_response, as_json
+from flask import request 
 
 app = Flask(__name__) 
 
@@ -21,12 +20,8 @@ def process_request():
 #        innerball = req_data['innerball']
         
         data = request.get_json(force=True)
-        try:
-            value = data['heel']
-        except (KeyError, TypeError, ValueError):
-            raise JsonError(description='Invalid value.')
-        
-        return json_response(value)
+        value = data['heel'] 
+        return value
         
         #return '''heel = {}, thumb = {}, outball = {}, innerball = {}''' . format(heel, thumb, outball, innerball)
         
