@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 
 app = Flask(__name__) 
 
@@ -8,7 +8,7 @@ def index():
 
 @app.route('/req', methods=['POST'])
 def prreq():
-    return jsonify(**request.json) #"key %s, val %s" % (request.json['key'], request.json['val'])
+    return "key %s, val %s" % (request.form['key'], request.form['val'])
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
