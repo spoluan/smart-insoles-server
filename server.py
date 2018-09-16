@@ -7,10 +7,10 @@ app = Flask(__name__)
 def index():
     return 'Hello' 
 
-@app.route('/requesting', methods=['PUT'])
+@app.route('/requesting', methods=['POST'])
 def process_request():
 	print('Recieved from client: {}'.format(request.data))
-	return Response('We received something…')
+	return Response('We received something')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
