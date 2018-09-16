@@ -28,9 +28,17 @@ def prreq():
     if len(standing_posture) < 2:
         standing_posture.append(result)
     
-    if len(standing_posture) == 2: 
-        if standing_posture[0] == standing_posture[1]:
+    if len(standing_posture) == 2:  
+        # Index 0 left, index 1 right
+        if standing_posture[1] > 700 and standing_posture[0] > 700 or (standing_posture[1] < 100 and standing_posture[0] < 100):
             standing = 'Normal'
+        elif standing_posture[0] < 600 and standing_posture[1] > 700:
+            standing = 'Right'
+        elif standing_posture[0] > 700 and standing_posture[1] < 600:
+            standing = 'Left'
+        else:
+            standing = 'Normal' 
+            
         standing_posture = []
 
     
