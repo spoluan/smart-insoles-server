@@ -10,15 +10,15 @@ def index():
 def prreq():
     input_json = request.get_json(force=True)   
     heel = input_json['heel']
-#    thumb = input_json['thumb']
-#    out_ball = input_json['out_ball']
-#    inner_ball = input_json['inner_ball']
+    thumb = input_json['thumb']
+    out_ball = input_json['out_ball']
+    inner_ball = input_json['inner_ball']
     
 #    total = 0
 #    for i in range(len(heel)):
 #        total = total + int(heel[i]) + int(thumb[i] + int(out_ball[i]) + int(inner_ball[i]))
 #     
-    result = {'hasil':heel}
+    result = {'hasil':thumb, 'hasil':out_ball, 'hasil':innner_ball}
     return jsonify(result) 
 
 if __name__ == '__main__':
