@@ -12,7 +12,7 @@ def process_request():
     if request.method == 'GET':
         return "Get key: %s, val: %s" % (request.args.get('key'), request.args.get('value'))
     elif request.method == 'POST':
-        data = request.form.get('data')
+        data = request.form
         return "Post => heel : %s, thumb: %s, out_ball: %s, inner_ball %s" % (data['heel'], data['thumb'], data['out_ball'], data['inner_ball'])
     else:
         return "Put method"
