@@ -18,7 +18,7 @@ def prreq():
 #    for i in range(len(heel)):
 #        total = total + int(heel[i]) + int(thumb[i] + int(out_ball[i]) + int(inner_ball[i]))
 #     
-    result = {'hasil':'here_{}' . format(thumb)}
+    result = {'hasil':out_ball}
     return jsonify(result) 
 
 if __name__ == '__main__':
