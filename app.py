@@ -27,10 +27,11 @@ def prreq():
     standing = ''
     if len(standing_posture) < 2:
         standing_posture.append(result)
-        if len(standing_posture) == 1:
-            if standing_posture[0] == standing_posture[1]:
-                standing = 'Normal'
-            standing_posture = []
+    
+    if len(standing_posture) == 2: 
+        if standing_posture[0] == standing_posture[1]:
+            standing = 'Normal'
+        standing_posture = []
 
     
     passing = {'standing':standing}
