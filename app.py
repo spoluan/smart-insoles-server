@@ -15,7 +15,7 @@ def process_request():
         req_data = request.form 
         heel = req_data['key']
         thumb = req_data['val'] 
-        return '''heel = {}, thumb = {}''' . format(heel, thumb)
+        return 'heel = {}, thumb = {}' . format(heel, thumb)
         
         #data = request.form
         #return "Post => heel : %s, thumb: %s, out_ball: %s, inner_ball %s" % (data.get('heel'), data.get('thumb'), data.get('outball'), data.get('innerball'))
