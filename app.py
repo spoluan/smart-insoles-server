@@ -8,12 +8,19 @@ def index():
 
 @app.route('/req', methods=['POST'])
 def prreq():
-    input_json = request.get_json(force=True)  
-#    heel = input_json['heel']
-#    thumb = input_json['thumb']
-#    out_ball = input_json['out_ball']
-#    inner_ball = input_json['inner_ball']
-    return jsonify(input_json) 
+    input_json = request.get_json(force=True)   
+    heel = input_json['heel']
+    thumb = input_json['thumb']
+    out_ball = input_json['out_ball']
+    inner_ball = input_json['inner_ball']
+    
+    total = 0
+    for i in range(len(heel)):
+        total = total + int(heel[i]) + int(thumb[i] + int(out_ball[i]) + int(inner_ball[i]))
+    
+    result = {'total':total}
+    
+    return jsonify(result) 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=True, threaded=True)
