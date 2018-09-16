@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 
+count = 0
+temp = ''
 app = Flask(__name__) 
 
 @app.route('/')
@@ -8,6 +10,8 @@ def index():
 
 @app.route('/req', methods=['POST'])
 def prreq():
+    global count, temp
+    
     input_json = request.get_json(force=True)   
     heel = input_json['heel']
     thumb = input_json['thumb']
@@ -19,7 +23,19 @@ def prreq():
         total = total + int(heel[i]) + int(thumb[i]) + int(out_ball[i]) + int(inner_ball[i])
      
     result = {'heel':heel,'thumb':thumb,'out_ball':out_ball,'inner_ball':inner_ball,'hasil':total}
-    return jsonify(result) 
+    
+    standing_posture = ''
+    if count > 0:
+        if temp == result:
+            standing_posture = 'Normal'
+        count = 0
+    
+    temp = result
+    count = count + 1
+    
+    passing = {'standing':standing_posture}
+    
+    return jsonify(passing) 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
