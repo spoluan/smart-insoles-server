@@ -15,7 +15,7 @@ def process_request():
 		#return "Post => heel : %s, thumb: %s, out_ball: %s, inner_ball %s" % (request.form['heel'], request.form['thumb'], request.form['out_ball'], request.form['inner_ball'])
 		if not request.json:
 	        abort(400) 
-	    return request.get_data()
+	    return request.values
 	else:
 		return "Put method"
 
