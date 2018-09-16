@@ -13,7 +13,7 @@ def process_request():
         return "Get key: %s, val: %s" % (request.args.get('key'), request.args.get('value'))
     elif request.method == 'POST':
         # Ref: https://scotch.io/bar-talk/processing-incoming-request-data-in-flask
-        req_data = request.get_json(force=True)   
+        req_data = request.form 
         heel = req_data['heel']
         thumb = req_data['thumb']
         outball = req_data['outball']
