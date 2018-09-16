@@ -26,7 +26,7 @@ def prreq():
     
     standing = '{}' . format(total)
     if len(standing_posture) < 2:
-        standing_posture.append(result)
+        standing_posture.append(int(total))
 #    
 #    if len(standing_posture) == 1:  
 #        # Index 0 left, index 1 right
