@@ -8,7 +8,7 @@ def index():
 
 @app.route('/req', methods=['POST'])
 def prreq():
-    return "key %s, val %s" % (request.form['key'], request.form['val'])
+    return "key %s, val %s" % (request.json['key'], request.json['val'])
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
