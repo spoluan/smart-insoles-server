@@ -11,7 +11,7 @@ def prreq():
     input_json = request.get_json(force=True) 
 #    print 'data from client:', input_json
     dictToReturn = {'answer': 42}
-    return jsonify(dictToReturn)
+    return jsonify(input_json)
 #    return "key %s, val %s" % (request.form['key'], request.form['val'])
 
 if __name__ == '__main__':
