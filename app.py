@@ -13,17 +13,12 @@ def process_request():
         return "Get key: %s, val: %s" % (request.args.get('key'), request.args.get('value'))
     elif request.method == 'POST':
         # Ref: https://scotch.io/bar-talk/processing-incoming-request-data-in-flask
-#        req_data = request.get_json()   
-#        heel = req_data['heel']
-#        thumb = req_data['thumb']
-#        outball = req_data['outball']
-#        innerball = req_data['innerball']
-        
-        data = request.get_json(force=True)
-        value = data['heel'] 
-        return value
-        
-        #return '''heel = {}, thumb = {}, outball = {}, innerball = {}''' . format(heel, thumb, outball, innerball)
+        req_data = request.get_json(force=True)   
+        heel = req_data['heel']
+        thumb = req_data['thumb']
+        outball = req_data['outball']
+        innerball = req_data['innerball']  
+        return '''heel = {}, thumb = {}, outball = {}, innerball = {}''' . format(heel, thumb, outball, innerball)
         
         #data = request.form
         #return "Post => heel : %s, thumb: %s, out_ball: %s, inner_ball %s" % (data.get('heel'), data.get('thumb'), data.get('outball'), data.get('innerball'))
