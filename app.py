@@ -9,10 +9,10 @@ def index():
 @app.route('/req', methods=['POST'])
 def prreq():
     input_json = request.get_json(force=True)   
-    heel = input_json['heel']
-    thumb = input_json['thumb']
-    out_ball = input_json['out_ball']
-    inner_ball = input_json['inner_ball']
+#    heel = input_json['heel']
+#    thumb = input_json['thumb']
+#    out_ball = input_json['out_ball']
+#    inner_ball = input_json['inner_ball']
     
 #    total = 0
 #    for i in range(len(heel)):
