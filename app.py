@@ -24,7 +24,7 @@ def prreq():
      
     result = {'heel':heel,'thumb':thumb,'out_ball':out_ball,'inner_ball':inner_ball,'hasil':total}
     
-#    standing = '' + total
+    standing = '{}' . format(total)
 #    if len(standing_posture) < 2:
 #        standing_posture.append(result)
 #    
