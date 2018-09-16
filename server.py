@@ -7,14 +7,10 @@ app = Flask(__name__)
 def index():
     return 'Hello' 
 
-@app.route('/request', methods=['POST'])
+@app.route('/request', methods=['PUT'])
 def process_request():
-	print(request.is_json)
-	content = request.get_json()
-	print(content)
-	print(content['id'])
-	print(content['name'])
-	return content['name']
+	 
+	return {'status': 'success', 'message': 'updated'}
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
