@@ -25,8 +25,8 @@ def prreq():
     result = {'heel':heel,'thumb':thumb,'out_ball':out_ball,'inner_ball':inner_ball,'hasil':total}
     
     standing = '{}' . format(total)
-#    if len(standing_posture) < 2:
-#        standing_posture.append(result)
+    if len(standing_posture) < 2:
+        standing_posture.append(result)
 #    
 #    if len(standing_posture) == 1:  
 #        # Index 0 left, index 1 right
@@ -42,7 +42,7 @@ def prreq():
 #        standing_posture = []
 
     
-    passing = {'standing':standing}
+    passing = {'standing':standing_posture}
     
     return jsonify(passing) 
 
