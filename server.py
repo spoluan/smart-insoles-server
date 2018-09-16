@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request, Response
+from flask import request, json
 
 app = Flask(__name__) 
 
@@ -13,7 +13,9 @@ def process_request():
 		return "Get key: %s, val: %s" % (request.args.get('key'), request.args.get('value'))
 	elif request.method == 'POST':
 		#return "Post => heel : %s, thumb: %s, out_ball: %s, inner_ball %s" % (request.form['heel'], request.form['thumb'], request.form['out_ball'], request.form['inner_ball'])
-		return request.is_json
+		if not request.json:
+	        abort(400) 
+	    return json.dumps(request.json) 
 	else:
 		return "Put method"
 
