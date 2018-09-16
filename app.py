@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 
 standing_posture = []
+standing = ''
 app = Flask(__name__) 
 
 @app.route('/')
@@ -9,7 +10,7 @@ def index():
 
 @app.route('/req', methods=['POST'])
 def prreq():
-    global standing_posture
+    global standing_posture, standing
     
     input_json = request.get_json(force=True)   
     heel = input_json['heel']
