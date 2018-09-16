@@ -23,10 +23,10 @@ def process_request():
         data = request.get_json(force=True)
         try:
             value = data['heel']
-            return value
         except (KeyError, TypeError, ValueError):
             raise JsonError(description='Invalid value.')
-        return json_response(value=value + 1)
+        
+        return json_response(value)
         
         #return '''heel = {}, thumb = {}, outball = {}, innerball = {}''' . format(heel, thumb, outball, innerball)
         
