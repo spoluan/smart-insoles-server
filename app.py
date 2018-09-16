@@ -7,7 +7,7 @@ def index():
     return 'Hello' 
 
 @app.route('/request', methods=['POST'])
-def process_request():
+def processrequest():
     return "key %s, val %s" % (request.form['key'], request.form['val'])
 
 if __name__ == '__main__':
