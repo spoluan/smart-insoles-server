@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 app = Flask(__name__) 
 
@@ -8,7 +8,11 @@ def index():
 
 @app.route('/req', methods=['POST'])
 def prreq():
-    return "key %s, val %s" % (request.form['key'], request.form['val'])
+    input_json = request.get_json(force=True) 
+#    print 'data from client:', input_json
+    dictToReturn = {'answer': 42}
+    return jsonify(dictToReturn)
+#    return "key %s, val %s" % (request.form['key'], request.form['val'])
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
