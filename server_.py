@@ -1,18 +1,8 @@
-from flask import Flask, render_template
-from flask_socketio import SocketIO, emit
-    
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
-app.config['DEBUG'] = True
-socketio = SocketIO(app)
-
+from flask import Flask
+ 
 @app.route('/')
 def index():
-    return 'Helo'
-
-@socketio.on('my event')
-def test_message(message):
-    emit('my response', {'data': 'got it!'})
+    return 'Hello' 
 
 if __name__ == '__main__':
     socketio.run(app)
