@@ -17,10 +17,8 @@ def prreq():
 #    total = 0
 #    for i in range(len(heel)):
 #        total = total + int(heel[i]) + int(thumb[i] + int(out_ball[i]) + int(inner_ball[i]))
-#    
-    result = {'total':78}
-    
-    return jsonify(result) 
+#     
+    return jsonify(input_json) 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
