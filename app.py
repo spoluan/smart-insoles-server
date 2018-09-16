@@ -24,11 +24,11 @@ def prreq():
      
     result = {'heel':heel,'thumb':thumb,'out_ball':out_ball,'inner_ball':inner_ball,'hasil':total}
     
-    standing = result
+    standing = '' + total
     if len(standing_posture) < 2:
         standing_posture.append(result)
     
-    if len(standing_posture) == 2:  
+    if len(standing_posture) == 1:  
         # Index 0 left, index 1 right
         if standing_posture[1] > 700 and standing_posture[0] > 700 or (standing_posture[1] < 100 and standing_posture[0] < 100):
             standing = 'Normal'
