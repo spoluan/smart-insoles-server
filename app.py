@@ -74,7 +74,7 @@ def prreq():
         
     passing = {'all_joint': ''}
     if len(standing) == 2:
-        if standing[0][1] == standing[1][1]: 
+        if standing[0][1] == standing[1][1] and standing[0][0] != standing[1][0]: # check time and check differet foot
             passing = {'all_joint':'Same'}
         else:
             passing = {'all_joint': 'Different'}
