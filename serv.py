@@ -41,7 +41,8 @@ def prreq():
     status_ = {'':''}
     
     input_json = request.get_json(force=True)
-     
+    
+    # Create table
     try:  
         if input_json['create'] == 'yes':
             db.create_all()
@@ -52,8 +53,10 @@ def prreq():
             db.session.commit()
             status_ = input_json
         except:     
-            status_ = 'pass'
+            status_ = 'skiped_create'
             pass
+        
+    # View table
     try:
         if input_json['view'] == 'yes':
             data = Database.query.all()
@@ -65,65 +68,42 @@ def prreq():
                 weight.append(i.weight)
                 time.append(i.time)
             status_ = {'all':'{}, {}, {}' . format(status, weight, time)}
+            
+            if status[0] != status[1] and time[0] == time[1]:
+                right = 0
+                left = 0
+                if status[0] == 'right':
+                    right = int(weight[0])
+                    left = int(weight[1])
+                    
+                if status[0] == 'left':
+                    left = int(weight[0])
+                    right = int(weight[1])
+                     
+                if right > 700 and left > 700 or (right < 100 and left < 100):
+                    status_ = 'Normal' # Normal
+                elif left < 600 and right > 700:
+                    status_ = 'Right' # Right
+                elif left > 700 and right < 600:
+                    status_ = 'Left' # Left
+                else:
+                    status_ = 'Normal' # Normal 
     except: 
+        status_ = 'skipped_view'
+        pass 
+    
+    # Delete table
+    try:
+        if input_json['delete'] == 'yes':
+            db.session.delete()
+            db.session.commit()
+            status_ = input_json
+    except:
+        status_ = 'skipped_delete'
         pass
-#    if input_json['status'] == 'right':
-#        standing.append(['right', input_json['weight'], input_json['time']])
-#        db.session.add(Database(input_json['time'], 'right', input_json['weight']))
-#        db.session.commit()
-#        
-#    if input_json['status'] == 'left':
-#        standing.append(['left', input_json['weight'], input_json['time']])
-#        db.session.add(Database(input_json['time'], 'left', input_json['weight']))
-#        db.session.commit()
       
-#    heel = input_json['heel']
-#    thumb = input_json['thumb']
-#    out_ball = input_json['out_ball']
-#    inner_ball = input_json['inner_ball']
-#    
-#    total = 0
-#    for i in range(len(heel)):
-#        total = total + int(heel[i]) + int(thumb[i]) + int(out_ball[i]) + int(inner_ball[i])
-#     
-#    result = {'heel':heel,'thumb':thumb,'out_ball':out_ball,'inner_ball':inner_ball,'hasil':total}
-#    
-#    standing = '{}' . format(total)
-#    if len(standing_posture) < 2:
-#        standing_posture.append(int(total))
-#    
-#    if len(standing_posture) == 2:  
-#        # Index 0 left, index 1 right
-#        if standing_posture[1] > 700 and standing_posture[0] > 700 or (standing_posture[1] < 100 and standing_posture[0] < 100):
-#            standing = 'Normal'
-#        elif standing_posture[0] < 600 and standing_posture[1] > 700:
-#            standing = 'Right'
-#        elif standing_posture[0] > 700 and standing_posture[1] < 600:
-#            standing = 'Left'
-#        else:
-#            standing = 'Normal' 
-#            
-#        standing_posture = []
-    
-#    try:
-#        data = Database.query.all()
-#        for u in data:
-#            status_ = u.status
-#    except:
-#        status_ = ''
-#        pass
-    
     passing = {'all_joint': '{}' . format(status_)}
-    
-#    if len(standing) == 2:
-#        if standing[0][2] == standing[1][2] and standing[0][0] != standing[1][0]: # check time and check differet foot
-#            passing = {'all_joint':'Same_{}' . format(standing)}
-#        else:
-#            passing = {'all_joint': 'Different_{}' . format(standing)}
-#        
-#        for i in range(len(standing)):
-#            standing.pop(0)
-    
+ 
     return jsonify(passing) 
 
 if __name__ == '__main__':
