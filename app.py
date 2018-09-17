@@ -20,8 +20,8 @@ class Database(db.Model):
     __tablename__ = "tb_mmslab"
     
     id = db.Column(db.Integer, primary_key=True)
-    time = db.Column(db.String(10))
-    status = db.Column(db.String(10))
+    time = db.Column(db.String(50), unique=True, nullable=False)
+    status = db.Column(db.String(50), unique=True, nullable=False)
     weight = db.Column(db.Integer)
      
     def __init__(self, time, status, weight):
@@ -43,9 +43,12 @@ def prreq():
     
     input_json = request.get_json(force=True)   
     
-    db.session.add(Database('10:33', 'right', 232))
-    db.session.commit()
-        
+    try:
+        db.session.add(Database('10:33', 'right', 232))
+        db.session.commit()
+    except:
+        pass
+    
 #    if input_json['status'] == 'right':
 #        standing.append(['right', input_json['weight'], input_json['time']])
 #        db.session.add(Database(input_json['time'], 'right', input_json['weight']))
@@ -85,13 +88,13 @@ def prreq():
 #        standing_posture = []
     
     status_ = ''
-    try:
-        data = Database.query.all()
-        for u in data:
-            status_ = u.status
-    except:
-        status_ = ''
-        pass
+#    try:
+#        data = Database.query.all()
+#        for u in data:
+#            status_ = u.status
+#    except:
+#        status_ = ''
+#        pass
     
     passing = {'all_joint': '{}' . format(status_)}
     
