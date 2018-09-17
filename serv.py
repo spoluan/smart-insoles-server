@@ -47,7 +47,7 @@ def prreq():
         status_ = input_json
     else: 
         try:
-            db.session.add(Database('right', 225, '2:4:0'))
+            db.session.add(Database(input_json['status'], input_json['weight'], input_json['time']))
             db.session.commit()
         except:     
             status_ = 'pass'
