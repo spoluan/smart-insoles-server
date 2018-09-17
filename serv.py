@@ -35,14 +35,17 @@ def index():
 def prreq():
     global standing, time_left, time_right
     
-    db.create_all();
+    db.create_all()
+    
+    status_ = ''
     
     input_json = request.get_json(force=True)   
     
     try:
-        db.session.add(User(request.form['key'], request.form['val']))
+        db.session.add(User('test', 'test'))
         db.session.commit()
-    except:
+    except:    
+        status_ = 'pass'
         pass
     
 #    if input_json['status'] == 'right':
@@ -83,7 +86,6 @@ def prreq():
 #            
 #        standing_posture = []
     
-    status_ = ''
 #    try:
 #        data = Database.query.all()
 #        for u in data:
