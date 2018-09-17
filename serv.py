@@ -14,23 +14,25 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     
 db = SQLAlchemy(app)
 
-class User(db.Model): 
-    __tablename__ = "users"
+class Database(db.Model): 
+    __tablename__ = "tb_mss1407blab"
     id = db.Column(db.Integer, primary_key = True)
-    key = db.Column(db.String(80), unique = True, nullable = False)
-    val = db.Column(db.String(80), unique = True, nullable = False)
+    status = db.Column(db.String(20)) # right | left
+    weight = db.Column(db.Integer)
+    time = db.Column(db.String(20))
     
-    def __init__(self, k, v):
-        self.key = k
-        self.val = v
+    def __init__(self, status, weight, time):
+        self.status = status
+        self.weight = weight
+        self.time = time
         
     def __repr__(self):
-        return '<User %r>' % self.key
+        return '<id %r>' % self.id
             
 
 @app.route('/')
 def index():
-    return 'Hello' 
+    return 'Hello'  
 
 @app.route('/req', methods=['POST'])
 def prreq():
@@ -40,15 +42,15 @@ def prreq():
     
     input_json = request.get_json(force=True)
     
-    try:
-        db.session.add(User('test', 'test'))
-        db.session.commit()
-    except:    
-        db.create_all() # Create table
-        db.session.add(User('test', 'test'))
-        db.session.commit()
-        status_ = 'pass'
-        pass
+    if input_json['create'] == 'yes':
+        db.create_all()
+    else: 
+        try:
+            db.session.add(Database('right', 225, '2:4:0'))
+            db.session.commit()
+        except:     
+            status_ = 'pass'
+            pass
     
 #    if input_json['status'] == 'right':
 #        standing.append(['right', input_json['weight'], input_json['time']])
