@@ -72,7 +72,7 @@ def prreq():
 #
 #    
         
-    
+    passing = {'all_joint': ''}
     if len(standing) == 2:
         if standing[0][1] == standing[1][1]: 
             passing = {'all_joint':'Same'}
