@@ -63,9 +63,10 @@ def prreq():
 #        standing_posture = []
 #
 #    
-    passing = {'left':standing_right}
+    passing = {'left':standing}
     
-    standing = []
+    if len(standing) == 2:
+        standing = []
     
     return jsonify(passing) 
 
