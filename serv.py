@@ -10,8 +10,7 @@ standing = []
 # postgresql-rugged-65055
 
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL'] 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']  
     
 db = SQLAlchemy(app)
 
@@ -36,10 +35,7 @@ def index():
 @app.route('/req', methods=['POST'])
 def prreq():
     global standing, time_left, time_right
-    
-    
-    
-    
+      
     status_ = ''
     
     input_json = request.get_json(force=True)   
@@ -49,6 +45,7 @@ def prreq():
         db.session.commit()
     except:    
         db.create_all()
+        db.exit()
         status_ = 'pass'
         pass
     
