@@ -23,8 +23,7 @@ class Database(db.Model):
     weight = db.Column(db.Integer)
     time = db.Column(db.String(20))
     
-    def __init__(self, id, status, weight, time):
-        self.id = id
+    def __init__(self, status, weight, time): 
         self.status = status
         self.weight = weight
         self.time = time
@@ -51,8 +50,8 @@ def prreq():
             db.create_all()
             status_ = input_json
     except: 
-        try:
-            db.session.add(Database(0, input_json['status'], input_json['weight'], input_json['time']))
+        try: 
+            db.session.add(Database(input_json['status'], input_json['weight'], input_json['time']))
             db.session.commit()
             status_ = input_json
         except:     
