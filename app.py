@@ -1,12 +1,10 @@
 from flask import Flask, request, jsonify
 
-standing_right = ''
-standing_left = ''
-
 time_right = ''
 time_left = ''
 
 standing = []
+
 app = Flask(__name__) 
 
 @app.route('/')
@@ -15,7 +13,7 @@ def index():
 
 @app.route('/req', methods=['POST'])
 def prreq():
-    global standing_right, standing_left, standing, time_left, time_right
+    global standing, time_left, time_right
     
     input_json = request.get_json(force=True)   
     
@@ -58,11 +56,13 @@ def prreq():
 #    
         
     passing = {'all_joint': ''}
+    
     if len(standing) == 2:
         if standing[0][2] == standing[1][2] and standing[0][0] != standing[1][0]: # check time and check differet foot
             passing = {'all_joint':'Same'}
         else:
-            passing = {'all_joint': 'Different'}
+            passing = {'all_joint': 'Different_{}' . format(standing)}
+        
         standing = []
     
     return jsonify(passing) 
