@@ -63,7 +63,8 @@ def prreq():
         else:
             passing = {'all_joint': 'Different_{}' . format(standing)}
         
-        standing = []
+        for i in range(len(standing)):
+            standing.pop(0)
     
     return jsonify(passing) 
 
