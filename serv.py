@@ -99,6 +99,18 @@ def prreq():
                                 db.session.commit() 
                             except: 
                                 pass
+                        else:
+                            # Delete table
+                            try: 
+                                data = Database.query.all()
+                                for i in data: 
+                                    data = Database.query.filter_by(id=i.id).first()
+                                    db.session.delete(data)
+                                
+                                db.session.commit() 
+                            except: 
+                                pass 
+                            status_ = 'Different'
                     except:
                         pass
             except: 
