@@ -42,9 +42,9 @@ def prreq():
 #        standing_posture = []
 #
 #    
-#    passing = {'standing':standing}
+    passing = {'standing':'Normal'}
     
-    return jsonify(input_json) 
+    return jsonify(passing) 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
