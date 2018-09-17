@@ -16,21 +16,21 @@ def prreq():
     input_json = request.get_json(force=True)   
     
     try:
-        standing_left = input_json['left']
+        standing_left = input_json['heel']
     except:
         standing_left = ''
         pass
     
     try:
-        standing_right = input_json['right']
+        standing_right = input_json['thumb']
     except:
         standing_right = ''
         pass
     
-    if standing_right == '':
+    if standing_right == '' and standing_left != '':
         standing.append(standing_left)
     
-    if standing_left == '':
+    if standing_left == '' and standing_right != '':
         standing.append(standing_right)
         
         
@@ -65,7 +65,9 @@ def prreq():
 #    
     passing = {'left':standing[0]}
     
-    return jsonify(input_json) 
+    standing = []
+    
+    return jsonify(passing) 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
