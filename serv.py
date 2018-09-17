@@ -44,8 +44,7 @@ def prreq():
         db.session.add(User('test', 'test'))
         db.session.commit()
     except:    
-        db.create_all()
-        db.exit()
+        db.session.create_all()
         status_ = 'pass'
         pass
     
