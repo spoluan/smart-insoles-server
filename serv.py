@@ -67,7 +67,7 @@ def prreq():
                 status.append(i.status)
                 weight.append(i.weight)
                 time.append(i.time)
-            status_ = {'all':'{}, {}, {}' . format(status, weight, time)}
+            status_ = '{}, {}, {}' . format(status, weight, time)
             
             if status[0] != status[1] and time[0] == time[1]:
                 right = 0
