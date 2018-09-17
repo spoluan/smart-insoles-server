@@ -19,8 +19,9 @@ class Database(db.Model):
     
     __tablename__ = "tb_mmslab"
     
-    time = db.Column(db.String(10), primary_key=True)
-    status = db.Column(db.String(10), unique=False, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    time = db.Column(db.String(10))
+    status = db.Column(db.String(10))
     weight = db.Column(db.Integer)
      
     def __init__(self, time, status, weight):
@@ -29,7 +30,7 @@ class Database(db.Model):
         self.weight = weight
     
     def __repr__(self):
-        return 'Database %r' % self.time
+        return 'Database %r' % self.status
         
 
 @app.route('/')
@@ -41,16 +42,19 @@ def prreq():
     global standing, time_left, time_right
     
     input_json = request.get_json(force=True)   
+    
+    db.session.add(Database('10:33', 'right', 232))
+    db.session.commit()
         
-    if input_json['status'] == 'right':
-        standing.append(['right', input_json['weight'], input_json['time']])
-        db.session.add(Database(input_json['time'], 'right', input_json['weight']))
-        db.session.commit()
-        
-    if input_json['status'] == 'left':
-        standing.append(['left', input_json['weight'], input_json['time']])
-        db.session.add(Database(input_json['time'], 'left', input_json['weight']))
-        db.session.commit()
+#    if input_json['status'] == 'right':
+#        standing.append(['right', input_json['weight'], input_json['time']])
+#        db.session.add(Database(input_json['time'], 'right', input_json['weight']))
+#        db.session.commit()
+#        
+#    if input_json['status'] == 'left':
+#        standing.append(['left', input_json['weight'], input_json['time']])
+#        db.session.add(Database(input_json['time'], 'left', input_json['weight']))
+#        db.session.commit()
       
 #    heel = input_json['heel']
 #    thumb = input_json['thumb']
@@ -81,10 +85,14 @@ def prreq():
 #        standing_posture = []
     
     status_ = ''
-    data = Database.query.all()
-    for u in data:
-        status_ = u.status
-        
+    try:
+        data = Database.query.all()
+        for u in data:
+            status_ = u.status
+    except:
+        status_ = ''
+        pass
+    
     passing = {'all_joint': '{}' . format(status_)}
     
 #    if len(standing) == 2:
