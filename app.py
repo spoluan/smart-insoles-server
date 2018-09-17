@@ -19,29 +19,14 @@ def prreq():
     
     input_json = request.get_json(force=True)   
     
-    try:
-        standing_left = input_json['left']
-        time_left = input_json['time']
-    except:
-        standing_left = ''
-        pass
     
-    try:
-        standing_right = input_json['right']
-        time_right = input_json['time']
-    except:
-        standing_right = ''
-        pass
+    if input_json['status'] == 'right':
+        standing.append(['right', input_json['weight'], input_json['time']])
     
-    if standing_right == '' and standing_left != '':
-        standing.append([standing_left, time_left])
-    
-    if standing_left == '' and standing_right != '':
-        standing.append([standing_right, time_right])
-    
-    
-    
+    if input_json['status'] == 'left':
+        standing.append(['left', input_json['weight'], input_json['time']])
         
+      
 #    heel = input_json['heel']
 #    thumb = input_json['thumb']
 #    out_ball = input_json['out_ball']
@@ -74,7 +59,7 @@ def prreq():
         
     passing = {'all_joint': ''}
     if len(standing) == 2:
-        if standing[0][1] == standing[1][1] and standing[0][0] != standing[1][0]: # check time and check differet foot
+        if standing[0][2] == standing[1][2] and standing[0][0] != standing[1][0]: # check time and check differet foot
             passing = {'all_joint':'Same'}
         else:
             passing = {'all_joint': 'Different'}
