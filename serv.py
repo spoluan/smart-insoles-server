@@ -94,16 +94,16 @@ def prreq():
         status_ = 'skipped_view'
         pass 
     
-    # Delete table
-    try:
-        if input_json['delete'] == 'yes':
-            data = Database.query.filter_by(time='1:3:32').first()
-            db.session.delete(data)
-            db.session.commit()
-            status_ = input_json
-    except:
-        status_ = 'skipped_delete'
-        pass
+#    # Delete table
+#    try:
+#        if input_json['delete'] == 'yes':
+#            data = Database.query.filter_by(time='1:3:32').first()
+#            db.session.delete(data)
+#            db.session.commit()
+#            status_ = input_json
+#    except:
+#        status_ = 'skipped_delete'
+#        pass
       
     passing = {'all_joint': '{}' . format(status_)}
  
