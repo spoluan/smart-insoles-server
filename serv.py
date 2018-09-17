@@ -3,17 +3,9 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy # Ref: https://www.codementor.io/garethdwyer/building-a-crud-application-with-flask-and-sqlalchemy-dm3wv7yu2
 import os
-
-time_right = ''
-time_left = ''
-
-standing = []
-
-# postgresql-rugged-65055
-
+  
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']  
-    
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']   
 db = SQLAlchemy(app)
 
 class Database(db.Model): 
@@ -37,8 +29,7 @@ def index():
     return 'Hello'  
 
 @app.route('/req', methods=['POST'])
-def prreq():
-    global standing, time_left, time_right
+def prreq(): 
       
     status_ = {'':''}
     
@@ -188,7 +179,7 @@ def prreq():
                     status_ = 'skipped_delete'
                     pass
       
-    passing = {'all_joint': '{}' . format(status_)}
+    passing = {'response': '{}' . format(status_)}
  
     return jsonify(passing) 
 
