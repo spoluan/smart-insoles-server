@@ -55,16 +55,18 @@ def prreq():
             status_ = 'pass'
             pass
     try:
-        data = Database.query.all()
-        status = []
-        weight = []
-        time = []
-        for i in data:
-            status.append(i.status)
-            weight.append(i.weight)
-            time.append(i.time)
-        status_ = {'all':'{}, {}, {}' . format(status, weight, time)}
-        
+        if input_json['view'] == 'yes':
+            data = Database.query.all()
+            status = []
+            weight = []
+            time = []
+            for i in data:
+                status.append(i.status)
+                weight.append(i.weight)
+                time.append(i.time)
+            status_ = {'all':'{}, {}, {}' . format(status, weight, time)}
+    except: 
+        pass
 #    if input_json['status'] == 'right':
 #        standing.append(['right', input_json['weight'], input_json['time']])
 #        db.session.add(Database(input_json['time'], 'right', input_json['weight']))
