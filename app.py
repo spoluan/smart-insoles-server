@@ -63,7 +63,7 @@ def prreq():
 #        standing_posture = []
 #
 #    
-    passing = {'left':standing[0]}
+    passing = {'left':standing_left}
     
     standing = []
     
