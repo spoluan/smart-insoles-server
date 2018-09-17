@@ -41,11 +41,12 @@ def prreq():
     status_ = {'':''}
     
     input_json = request.get_json(force=True)
-    
-    if input_json['create'] == 'yes':
-        db.create_all()
-        status_ = input_json
-    else: 
+     
+    try:  
+        if input_json['create'] == 'yes':
+            db.create_all()
+            status_ = input_json
+    except: 
         try:
             db.session.add(Database(input_json['status'], input_json['weight'], input_json['time']))
             db.session.commit()
