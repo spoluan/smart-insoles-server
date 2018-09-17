@@ -2,6 +2,10 @@ from flask import Flask, request, jsonify
 
 standing_right = ''
 standing_left = ''
+
+time_right = ''
+time_left = ''
+
 standing = []
 app = Flask(__name__) 
 
@@ -11,27 +15,29 @@ def index():
 
 @app.route('/req', methods=['POST'])
 def prreq():
-    global standing_right, standing_left, standing
+    global standing_right, standing_left, standing, time_left, time_right
     
     input_json = request.get_json(force=True)   
     
     try:
         standing_left = input_json['left']
+        time_left = input_json['time']
     except:
         standing_left = ''
         pass
     
     try:
         standing_right = input_json['right']
+        time_right = input_json['right']
     except:
         standing_right = ''
         pass
     
     if standing_right == '' and standing_left != '':
-        standing.append(standing_left)
+        standing.append([standing_left, time_left])
     
     if standing_left == '' and standing_right != '':
-        standing.append(standing_right)
+        standing.append([standing_right, time_right])
         
         
 #    heel = input_json['heel']
@@ -63,7 +69,8 @@ def prreq():
 #        standing_posture = []
 #
 #    
-    passing = {'left':standing}
+        
+    passing = {'all_joint':standing}
     
     if len(standing) == 2:
         standing = []
