@@ -10,28 +10,22 @@ standing = []
 # postgresql-rugged-65055
 
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL'] 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
 db = SQLAlchemy(app)
 
 class User(db.Model): 
-    __tablename__ = "users" 
-    id = db.Column(db.Integer, primary_key=True)
-#    time = db.Column(db.String(50), unique=True, nullable=False)
-#    status = db.Column(db.String(50), unique=True, nullable=False)
-#    weight = db.Column(db.Integer)
-    key = db.Column(db.String(80), unique=True, nullable=False)
-    val = db.Column(db.String(80), unique=True, nullable=False)
-     
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key = True)
+    key = db.Column(db.String(80), unique = True, nullable = False)
+    val = db.Column(db.String(80), unique = True, nullable = False)
     def __init__(self, k, v):
         self.key = k
         self.val = v
-#        self.weight = w
-    
     def __repr__(self):
         return '<User %r>' % self.key
-        
+            
 
 @app.route('/')
 def index():
@@ -41,10 +35,12 @@ def index():
 def prreq():
     global standing, time_left, time_right
     
+    db.create_all();
+    
     input_json = request.get_json(force=True)   
     
     try:
-        db.session.add(User('v', 'e'))
+        db.session.add(User(request.form['key'], request.form['val']))
         db.session.commit()
     except:
         pass
