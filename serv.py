@@ -95,8 +95,7 @@ def prreq():
     # Delete table
     try:
         if input_json['delete'] == 'yes':
-            db.session.delete()
-            db.session.commit()
+#            db.session.delete() 
             status_ = input_json
     except:
         status_ = 'skipped_delete'
