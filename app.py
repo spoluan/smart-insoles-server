@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
 
-standing_posture = []
-standing = ''
+standing_right = ''
+standing_left = ''
+standing = []
 app = Flask(__name__) 
 
 @app.route('/')
@@ -10,9 +11,29 @@ def index():
 
 @app.route('/req', methods=['POST'])
 def prreq():
-    global standing_posture, standing
+    global standing_right, standing_left, standing
     
     input_json = request.get_json(force=True)   
+    
+    try:
+        standing_left = input_json['left']
+    except:
+        standing_left = ''
+        pass
+    
+    try:
+        standing_right = input_json['right']
+    except:
+        standing_right = ''
+        pass
+    
+    if standing_right == '':
+        standing.append(standing_left)
+    
+    if standing_left == '':
+        standing.append(standing_right)
+        
+        
 #    heel = input_json['heel']
 #    thumb = input_json['thumb']
 #    out_ball = input_json['out_ball']
@@ -42,7 +63,7 @@ def prreq():
 #        standing_posture = []
 #
 #    
-    passing = {'left':input_json}
+    passing = {'left':standing[0]}
     
     return jsonify(input_json) 
 
