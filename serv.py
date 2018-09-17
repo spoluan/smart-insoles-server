@@ -38,13 +38,13 @@ def prreq():
       
     status_ = ''
     
-    input_json = request.get_json(force=True)   
+    input_json = request.get_json(force=True)
     
     try:
         db.session.add(User('test', 'test'))
         db.session.commit()
     except:    
-        db.session.create_all()
+        db.create_all()
         status_ = 'pass'
         pass
     
