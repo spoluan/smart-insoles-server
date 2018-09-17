@@ -7,14 +7,17 @@ time_left = ''
 
 standing = []
 
+# postgres://zdkzuiyxstxtne:a2bde5bac5f2e0b7eda077f9c5329eab07ab6b41fc9a207113764995ed94d5ca@ec2-107-22-169-45.compute-1.amazonaws.com:5432/d48e7c86kgmeuh
+
 app = Flask(__name__) 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    
 db = SQLAlchemy(app)
 
 class Database(db.Model):
     
-    __tablename__ = "tb_mms1407blab"
+    __tablename__ = "tb_mmslab"
     
     time = db.Column(db.String(10), primary_key=True)
     status = db.Column(db.String(10), unique=False, nullable=False)
@@ -76,19 +79,22 @@ def prreq():
 #            standing = 'Normal' 
 #            
 #        standing_posture = []
-#
-#    
-        
-    passing = {'all_joint': '{} . {}' . format(standing, len(standing))}
     
-    if len(standing) == 2:
-        if standing[0][2] == standing[1][2] and standing[0][0] != standing[1][0]: # check time and check differet foot
-            passing = {'all_joint':'Same_{}' . format(standing)}
-        else:
-            passing = {'all_joint': 'Different_{}' . format(standing)}
+    status_ = ''
+    data = Database.query.all()
+    for u in data:
+        status_ = u.status
         
-        for i in range(len(standing)):
-            standing.pop(0)
+    passing = {'all_joint': '{}' . format(status_)}
+    
+#    if len(standing) == 2:
+#        if standing[0][2] == standing[1][2] and standing[0][0] != standing[1][0]: # check time and check differet foot
+#            passing = {'all_joint':'Same_{}' . format(standing)}
+#        else:
+#            passing = {'all_joint': 'Different_{}' . format(standing)}
+#        
+#        for i in range(len(standing)):
+#            standing.pop(0)
     
     return jsonify(passing) 
 
