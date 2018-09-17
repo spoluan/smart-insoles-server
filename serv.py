@@ -20,9 +20,11 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     key = db.Column(db.String(80), unique = True, nullable = False)
     val = db.Column(db.String(80), unique = True, nullable = False)
+    
     def __init__(self, k, v):
         self.key = k
         self.val = v
+        
     def __repr__(self):
         return '<User %r>' % self.key
             
@@ -35,7 +37,8 @@ def index():
 def prreq():
     global standing, time_left, time_right
     
-    db.create_all()
+    
+    
     
     status_ = ''
     
@@ -45,6 +48,7 @@ def prreq():
         db.session.add(User('test', 'test'))
         db.session.commit()
     except:    
+        db.create_all()
         status_ = 'pass'
         pass
     
