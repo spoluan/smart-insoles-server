@@ -38,7 +38,7 @@ def index():
 def prreq():
     global standing, time_left, time_right
       
-    status_ = ''
+    status_ = {'':''}
     
     input_json = request.get_json(force=True)
     
@@ -49,6 +49,7 @@ def prreq():
         try:
             db.session.add(Database(input_json['status'], input_json['weight'], input_json['time']))
             db.session.commit()
+            status_ = input_json
         except:     
             status_ = 'pass'
             pass
