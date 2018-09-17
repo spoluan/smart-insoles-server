@@ -15,22 +15,22 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
 db = SQLAlchemy(app)
 
-class DB_MMSLAB(db.Model):
-    
-    __tablename__ = "tb_mmslab"
-    
+class User(db.Model): 
+    __tablename__ = "users" 
     id = db.Column(db.Integer, primary_key=True)
-    time = db.Column(db.String(50), unique=True, nullable=False)
-    status = db.Column(db.String(50), unique=True, nullable=False)
-    weight = db.Column(db.Integer)
+#    time = db.Column(db.String(50), unique=True, nullable=False)
+#    status = db.Column(db.String(50), unique=True, nullable=False)
+#    weight = db.Column(db.Integer)
+    key = db.Column(db.String(80), unique=True, nullable=False)
+    val = db.Column(db.String(80), unique=True, nullable=False)
      
-    def __init__(self, time, status, weight):
-        self.time = time
-        self.status = status
-        self.weight = weight
+    def __init__(self, k, v):
+        self.key = k
+        self.val = v
+#        self.weight = w
     
     def __repr__(self):
-        return 'Database %r' % self.time
+        return '<User %r>' % self.key
         
 
 @app.route('/')
@@ -44,7 +44,7 @@ def prreq():
     input_json = request.get_json(force=True)   
     
     try:
-        db.session.add(DB_MMSLAB('10:33', 'right', 232))
+        db.session.add(User('v', 'e'))
         db.session.commit()
     except:
         pass
