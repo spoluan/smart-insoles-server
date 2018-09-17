@@ -72,7 +72,7 @@ def prreq():
                         weight.append(i.weight)
                         time.append(i.time)
                         
-                    status_ = '{}, {}, {}, {}' . format(id, status, weight, time)
+                    status_ = '{}, {}, {}, {}, {}' . format(id, status, weight, time, len(data))
                     
                     try: # Handle array exception
                         if status[0] != status[1] and time[0] == time[1]:
@@ -93,7 +93,19 @@ def prreq():
                             elif left > 700 and right < 600:
                                 status_ = 'Left' # Left
                             else:
-                                status_ = 'Normal' # Normal 
+                                status_ = 'Normal' # Normal
+                            
+                            # Delete table
+                            try:
+                                if input_json['delete'] == 'yes':
+                                    data = Database.query.all()
+                                    for i in data: 
+                                        data = Database.query.filter_by(id=i.id).first()
+                                        db.session.delete(data)
+                                    
+                                    db.session.commit() 
+                            except: 
+                                pass
                     except:
                         pass
             except: 
