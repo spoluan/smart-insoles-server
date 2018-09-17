@@ -21,10 +21,10 @@ class Database(db.Model):
     weight = db.Column(db.Integer)
     time = db.Column(db.String(20))
     
-    def __init__(self, s, w, t):
-        self.status = s
-        self.weight = w
-        self.time = t
+    def __init__(self, status, weight, time):
+        self.status = status
+        self.weight = weight
+        self.time = time
         
     def __repr__(self):
         return '<id %r>' % self.id
