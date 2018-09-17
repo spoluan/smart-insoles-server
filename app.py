@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+import os
 
 time_right = ''
 time_left = ''
@@ -6,6 +8,25 @@ time_left = ''
 standing = []
 
 app = Flask(__name__) 
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db = SQLAlchemy(app)
+
+class Database(db.Model):
+    
+    __tablename__ = "tb_mms1407blab"
+    
+    time = db.Column(db.String(10), primary_key=True)
+    status = db.Column(db.String(10), unique=False, nullable=False)
+    weight = db.Column(db.Integer)
+     
+    def __init__(self, time, status, weight):
+        self.time = time
+        self.status = status
+        self.weight = weight
+    
+    def __repr__(self):
+        return 'Database %r' % self.time
+        
 
 @app.route('/')
 def index():
@@ -16,14 +37,16 @@ def prreq():
     global standing, time_left, time_right
     
     input_json = request.get_json(force=True)   
-    
-    
+        
     if input_json['status'] == 'right':
         standing.append(['right', input_json['weight'], input_json['time']])
-    
+        db.session.add(Database(input_json['time'], 'right', input_json['weight']))
+        db.session.commit()
+        
     if input_json['status'] == 'left':
         standing.append(['left', input_json['weight'], input_json['time']])
-        
+        db.session.add(Database(input_json['time'], 'left', input_json['weight']))
+        db.session.commit()
       
 #    heel = input_json['heel']
 #    thumb = input_json['thumb']
