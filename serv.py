@@ -71,25 +71,25 @@ def prreq():
                 time.append(i.time)
             status_ = '{}, {}, {}' . format(status, weight, time)
             
-            if status[0] != status[1] and time[0] == time[1]:
-                right = 0
-                left = 0
-                if status[0] == 'right':
-                    right = int(weight[0])
-                    left = int(weight[1])
-                    
-                if status[0] == 'left':
-                    left = int(weight[0])
-                    right = int(weight[1])
-                     
-                if right > 700 and left > 700 or (right < 100 and left < 100):
-                    status_ = 'Normal' # Normal
-                elif left < 600 and right > 700:
-                    status_ = 'Right' # Right
-                elif left > 700 and right < 600:
-                    status_ = 'Left' # Left
-                else:
-                    status_ = 'Normal' # Normal 
+#            if status[0] != status[1] and time[0] == time[1]:
+#                right = 0
+#                left = 0
+#                if status[0] == 'right':
+#                    right = int(weight[0])
+#                    left = int(weight[1])
+#                    
+#                if status[0] == 'left':
+#                    left = int(weight[0])
+#                    right = int(weight[1])
+#                     
+#                if right > 700 and left > 700 or (right < 100 and left < 100):
+#                    status_ = 'Normal' # Normal
+#                elif left < 600 and right > 700:
+#                    status_ = 'Right' # Right
+#                elif left > 700 and right < 600:
+#                    status_ = 'Left' # Left
+#                else:
+#                    status_ = 'Normal' # Normal 
     except: 
         status_ = 'skipped_view'
         pass 
