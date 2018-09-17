@@ -7,7 +7,7 @@ time_left = ''
 
 standing = []
 
-# postgres://zdkzuiyxstxtne:a2bde5bac5f2e0b7eda077f9c5329eab07ab6b41fc9a207113764995ed94d5ca@ec2-107-22-169-45.compute-1.amazonaws.com:5432/d48e7c86kgmeuh
+# postgresql-rugged-65055
 
 app = Flask(__name__) 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
@@ -15,7 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
 db = SQLAlchemy(app)
 
-class Database(db.Model):
+class DB_MMSLAB(db.Model):
     
     __tablename__ = "tb_mmslab"
     
@@ -30,7 +30,7 @@ class Database(db.Model):
         self.weight = weight
     
     def __repr__(self):
-        return 'Database %r' % self.status
+        return 'Database %r' % self.time
         
 
 @app.route('/')
@@ -44,7 +44,7 @@ def prreq():
     input_json = request.get_json(force=True)   
     
     try:
-        db.session.add(Database('10:33', 'right', 232))
+        db.session.add(DB_MMSLAB('10:33', 'right', 232))
         db.session.commit()
     except:
         pass
