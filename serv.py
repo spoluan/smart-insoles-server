@@ -1,5 +1,7 @@
+# 
+
 from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy # Ref: https://www.codementor.io/garethdwyer/building-a-crud-application-with-flask-and-sqlalchemy-dm3wv7yu2
 import os
 
 time_right = ''
@@ -95,7 +97,7 @@ def prreq():
     # Delete table
     try:
         if input_json['delete'] == 'yes':
-            data = Database.query.all()
+            data = Database.query.filter_by(time='1:3:32').first()
             db.session.delete(data)
             db.session.commit()
             status_ = input_json
