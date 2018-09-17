@@ -53,27 +53,21 @@ def prreq():
         try: 
             db.session.add(Database(input_json['status'], input_json['weight'], input_json['time']))
             db.session.commit()
-            status_ = input_json
-        except:     
-            status_ = 'skiped_create'
-            pass
-        
-            # View table
-            try:
-                if input_json['view'] == 'yes':
-                    data = Database.query.all()
-                    id = []
-                    status = []
-                    weight = []
-                    time = []
-                    for i in data:
-                        id.append(i.id)
-                        status.append(i.status)
-                        weight.append(i.weight)
-                        time.append(i.time)
-                        
-                    status_ = '{}, {}, {}, {}, {}' . format(id, status, weight, time, len(data))
+            try: 
+                data = Database.query.all()
+                id = []
+                status = []
+                weight = []
+                time = []
+                for i in data:
+                    id.append(i.id)
+                    status.append(i.status)
+                    weight.append(i.weight)
+                    time.append(i.time)
                     
+                status_ = '{}, {}, {}, {}, {}' . format(id, status, weight, time, len(data))
+                
+                if len(data) == 2:
                     try: # Handle array exception
                         if status[0] != status[1] and time[0] == time[1]:
                             right = 0
@@ -96,18 +90,74 @@ def prreq():
                                 status_ = 'Normal' # Normal
                             
                             # Delete table
-                            try:
-                                if input_json['delete'] == 'yes':
+                            try: 
+                                data = Database.query.all()
+                                for i in data: 
+                                    data = Database.query.filter_by(id=i.id).first()
+                                    db.session.delete(data)
+                                
+                                db.session.commit() 
+                            except: 
+                                pass
+                    except:
+                        pass
+            except: 
+                status_ = 'skipped_view'
+                pass 
+        except:     
+            status_ = 'skiped_create'
+            pass
+        
+            # View table
+            try:
+                if input_json['view'] == 'yes':
+                    data = Database.query.all()
+                    id = []
+                    status = []
+                    weight = []
+                    time = []
+                    for i in data:
+                        id.append(i.id)
+                        status.append(i.status)
+                        weight.append(i.weight)
+                        time.append(i.time)
+                        
+                    status_ = '{}, {}, {}, {}, {}' . format(id, status, weight, time, len(data))
+                    
+                    if len(data) == 2:
+                        try: # Handle array exception
+                            if status[0] != status[1] and time[0] == time[1]:
+                                right = 0
+                                left = 0
+                                if status[0] == 'right':
+                                    right = int(weight[0])
+                                    left = int(weight[1])
+                                    
+                                if status[0] == 'left':
+                                    left = int(weight[0])
+                                    right = int(weight[1])
+                                     
+                                if right > 700 and left > 700 or (right < 100 and left < 100):
+                                    status_ = 'Normal' # Normal
+                                elif left < 600 and right > 700:
+                                    status_ = 'Right' # Right
+                                elif left > 700 and right < 600:
+                                    status_ = 'Left' # Left
+                                else:
+                                    status_ = 'Normal' # Normal
+                                
+                                # Delete table
+                                try: 
                                     data = Database.query.all()
                                     for i in data: 
                                         data = Database.query.filter_by(id=i.id).first()
                                         db.session.delete(data)
                                     
                                     db.session.commit() 
-                            except: 
-                                pass
-                    except:
-                        pass
+                                except: 
+                                    pass
+                        except:
+                            pass
             except: 
                 status_ = 'skipped_view'
                 pass 
