@@ -23,8 +23,7 @@ class Database(db.Model):
     weight = db.Column(db.Integer)
     time = db.Column(db.String(20))
     
-    def __init__(self, id, status, weight, time):
-        self.id = id
+    def __init__(self, status, weight, time):
         self.status = status
         self.weight = weight
         self.time = time
