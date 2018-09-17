@@ -63,16 +63,17 @@ def prreq():
             try:
                 if input_json['view'] == 'yes':
                     data = Database.query.all()
-                    id = []
+                    ids = []
                     status = []
                     weight = []
                     time = []
                     for i in data:
-                        id.append(i.id)
+                        ids.append(i.id)
                         status.append(i.status)
                         weight.append(i.weight)
                         time.append(i.time)
-                    status_ = '{}, {}, {}, {}' . format(id, status, weight, time)
+                        
+                    status_ = '{}, {}, {}, {}' . format(ids, status, weight, time)
                     
                     if status[0] != status[1] and time[0] == time[1]:
                         right = 0
