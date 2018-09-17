@@ -28,7 +28,7 @@ def prreq():
     
     try:
         standing_right = input_json['right']
-        time_right = input_json['right']
+        time_right = input_json['time']
     except:
         standing_right = ''
         pass
@@ -38,7 +38,9 @@ def prreq():
     
     if standing_left == '' and standing_right != '':
         standing.append([standing_right, time_right])
-        
+    
+    
+    
         
 #    heel = input_json['heel']
 #    thumb = input_json['thumb']
@@ -70,9 +72,12 @@ def prreq():
 #
 #    
         
-    passing = {'all_joint':standing}
     
     if len(standing) == 2:
+        if standing[0][1] == standing[1][1]: 
+            passing = {'all_joint':'Same'}
+        else:
+            passing = {'all_joint': 'Different'}
         standing = []
     
     return jsonify(passing) 
