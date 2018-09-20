@@ -41,10 +41,10 @@ def prreq():
             db.create_all()
             status_ = input_json
     except: 
-        try: 
+        try: # Input data
             db.session.add(Database(input_json['status'], input_json['weight'], input_json['time']))
             db.session.commit()
-            try: 
+            try: # View data
                 data = Database.query.all()
                 id = []
                 status = []
@@ -179,7 +179,7 @@ def prreq():
                     status_ = 'skipped_delete'
                     pass
       
-    passing = {'response': '{}' . format(status_)}
+    passing = {'response': status_}
  
     return jsonify(passing) 
 
