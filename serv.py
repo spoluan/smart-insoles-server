@@ -110,17 +110,16 @@ def viewData(input_json):
     except:
         return 'EMPTY'
     
-def getAvailability(input_json):
-    try: 
-        data_length, id, status, weight, time = viewData(input_json)
-        
+def getAvailability(input_json): 
+    try:  
+        data_length, id, status, weight, time = viewData(input_json) 
         if data_length == 2:
             if (status[0] == 'RIGHT' and status[1] == 'LEFT') or (status[0] == 'LEFT' and status[1] == 'RIGHT'): 
                 return False, id, status, weight, time
-        if data_length <= 1:
-            return True 
+        else:
+            return True, id, status, weight, time
     except: 
-        return False
+        return False, 0, 0, 0, 0, 0
     
 def checkStanding(status, time, weight): 
     try: # Handle array exception   
