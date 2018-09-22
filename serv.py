@@ -44,7 +44,7 @@ def prreq():
         if availability == True: 
             status_ = insertData(input_json)
         else:
-            status_ = checkStanding(status, time, weight)
+            status_ = {'STATUS':'INSERT_NO'}
     
     # Delete data
     if method_status == 'DELETE':
@@ -114,8 +114,7 @@ def getAvailability(input_json):
     try:  
         data_length, id, status, weight, time = viewData(input_json) 
         if data_length == 2:
-            if (status[0] == 'RIGHT' and status[1] == 'LEFT') or (status[0] == 'LEFT' and status[1] == 'RIGHT'): 
-                return False, data_length, id, status, weight, time
+            return False, data_length, id, status, weight, time
         else:
             return True, data_length, id, status, weight, time
     except: 
@@ -123,35 +122,39 @@ def getAvailability(input_json):
     
 def checkStanding(status, time, weight): 
     try: # Handle array exception   
-        if status[0] != status[1] and time[0] == time[1]:
-            right = 0
-            left = 0
-            if status[0] == 'RIGHT' and status[1] == 'LEFT':
-                right = int(weight[0])
-                left = int(weight[1])
-                
-                if right > 700 and left > 700 or (right < 100 and left < 100):
-                    status_ = 'NORMAL' # Normal
-                elif left < 600 and right > 700:
-                    status_ = 'RIGHT' # Right
-                elif left > 700 and right < 600:
-                    status_ = 'LEFT' # Left
-                else:
-                    status_ = 'NORMAL' # Normal 
+        if (status[0] == 'RIGHT' and status[1] == 'LEFT') or (status[0] == 'LEFT' and status[1] == 'RIGHT'): 
+            if time[0] == time[1]:
+                right = 0
+                left = 0
+                if status[0] == 'RIGHT' and status[1] == 'LEFT':
+                    right = int(weight[0])
+                    left = int(weight[1])
                     
-            if status[0] == 'LEFT' and status[1] == 'RIGHT':
-                left = int(weight[0])
-                right = int(weight[1])
-                
-                if right > 700 and left > 700 or (right < 100 and left < 100):
-                    status_ = 'NORMAL' # Normal
-                elif left < 600 and right > 700:
-                    status_ = 'RIGHT' # Right
-                elif left > 700 and right < 600:
-                    status_ = 'LEFT' # Left
-                else:
-                    status_ = 'NORMAL' # Normal 
-                  
+                    if right > 700 and left > 700 or (right < 100 and left < 100):
+                        status_ = 'NORMAL' # Normal
+                    elif left < 600 and right > 700:
+                        status_ = 'RIGHT' # Right
+                    elif left > 700 and right < 600:
+                        status_ = 'LEFT' # Left
+                    else:
+                        status_ = 'NORMAL' # Normal 
+                        
+                if status[0] == 'LEFT' and status[1] == 'RIGHT':
+                    left = int(weight[0])
+                    right = int(weight[1])
+                    
+                    if right > 700 and left > 700 or (right < 100 and left < 100):
+                        status_ = 'NORMAL' # Normal
+                    elif left < 600 and right > 700:
+                        status_ = 'RIGHT' # Right
+                    elif left > 700 and right < 600:
+                        status_ = 'LEFT' # Left
+                    else:
+                        status_ = 'NORMAL' # Normal 
+            else:
+                pass
+        else:
+            pass                  
         return {'STATUS':status_}
     except:
         status_ = {'STATUS':'CHECKING_ERROR'}
