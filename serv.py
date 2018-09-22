@@ -59,6 +59,11 @@ def prreq():
                 status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
         else:
             status_ = {'STATUS':'EMPTY'}
+    
+    # 1407BLAB check standing method
+    if method_status == 'CHECK':
+        data_length, id, status, weight, time = viewData(input_json) 
+        status_ = checkStanding(status, time, weight) 
         
     return jsonify(status_) 
 
@@ -128,8 +133,7 @@ def checkStanding(status, time, weight):
                 left = 0
                 if status[0] == 'RIGHT' and status[1] == 'LEFT':
                     right = int(weight[0])
-                    left = int(weight[1])
-                    
+                    left = int(weight[1]) 
                     if right > 700 and left > 700 or (right < 100 and left < 100):
                         status_ = 'NORMAL' # Normal
                     elif left < 600 and right > 700:
@@ -141,8 +145,7 @@ def checkStanding(status, time, weight):
                         
                 if status[0] == 'LEFT' and status[1] == 'RIGHT':
                     left = int(weight[0])
-                    right = int(weight[1])
-                    
+                    right = int(weight[1]) 
                     if right > 700 and left > 700 or (right < 100 and left < 100):
                         status_ = 'NORMAL' # Normal
                     elif left < 600 and right > 700:
@@ -152,12 +155,13 @@ def checkStanding(status, time, weight):
                     else:
                         status_ = 'NORMAL' # Normal 
             else:
-                pass
+                status_ = 'CHECKING_DEL_TIME'
         else:
-            pass                  
+            status_ = 'CHECKING_DEL_SAME'   
+            
         return {'STATUS':status_}
     except:
-        status_ = {'STATUS':'CHECKING_ERROR'}
+        status_ = {'STATUS':'CHECKING_NO'}
         return status_
 
 
