@@ -53,8 +53,11 @@ def prreq():
     # View data
     if method_status == 'VIEW':
         data_length, id, status, weight, time = viewData(input_json)
-        status_ = {'STATUS':{'DATA_LENGTH':data_length, 'ID':id, 'STATUS':status, 'WEIGHT': weight, 'TIME':time}}
-       
+        status_ = []
+        for i in range(data_length):
+            status_.append({'DATA_LENGTH':data_length[i], 'ID':id[i], 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
+        status_ = {'STATUS':str(status_)}    
+        
     return jsonify(status_) 
 
 def createTable(input_json):
