@@ -115,9 +115,9 @@ def getAvailability(input_json):
         data_length, id, status, weight, time = viewData(input_json) 
         if data_length == 2:
             if (status[0] == 'RIGHT' and status[1] == 'LEFT') or (status[0] == 'LEFT' and status[1] == 'RIGHT'): 
-                return False, id, status, weight, time
+                return False, data_length, id, status, weight, time
         else:
-            return True, id, status, weight, time
+            return True, data_length, id, status, weight, time
     except: 
         return False, 0, 0, 0, 0, 0
     
