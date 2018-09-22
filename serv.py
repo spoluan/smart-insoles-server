@@ -155,8 +155,10 @@ def checkStanding(status, time, weight):
                     else:
                         status_ = 'NORMAL' # Normal 
             else: 
+                deleteData()
                 status_ = 'CHECKING_DEL_TIME'
         else:
+            deleteData()
             status_ = 'CHECKING_DEL_SAME'   
             
         return {'STATUS':status_}
