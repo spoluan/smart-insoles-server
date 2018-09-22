@@ -55,7 +55,7 @@ def prreq():
         data_length, id, status, weight, time = viewData(input_json)
         status_ = []
         for i in range(data_length):
-            status_.append({'DATA_LENGTH':data_length[i], 'ID':id[i], 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
+            status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
         status_ = {'STATUS':str(status_)}    
         
     return jsonify(status_) 
