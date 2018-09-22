@@ -1,4 +1,8 @@
-# 
+
+# File: serv.py
+# Author: Sevendi Eldrige Rifki Poluan
+# Date: September 1, 2018
+# Desc: Heroku server for synchronizing Insoles data and handing request from MSS1407B's lab app
 
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy # Ref: https://www.codementor.io/garethdwyer/building-a-crud-application-with-flask-and-sqlalchemy-dm3wv7yu2
@@ -52,7 +56,7 @@ def prreq():
     
     # View data
     if method_status == 'VIEW':
-        data_length, id, status, weight, time = viewData(input_json)
+        data_length, id, status, weight, time = viewData()
         if data_length != 0:
             status_ = []
             for i in range(data_length):
@@ -62,7 +66,7 @@ def prreq():
     
     # 1407BLAB check standing method
     if method_status == 'CHECK':
-        data_length, id, status, weight, time = viewData(input_json) 
+        data_length, id, status, weight, time = viewData() 
         status_ = checkStanding(status, time, weight) 
         
     return jsonify(status_) 
@@ -99,7 +103,7 @@ def deleteData():
         status_ = {'STATUS':'DELETE_DATA_NO'}
         return status_
 
-def viewData(input_json):
+def viewData():
     try: 
         data = Database.query.all()
         id = []
@@ -117,7 +121,7 @@ def viewData(input_json):
     
 def getAvailability(input_json): 
     try:  
-        data_length, id, status, weight, time = viewData(input_json) 
+        data_length, id, status, weight, time = viewData() 
         if data_length == 2:
             return False, data_length, id, status, weight, time
         else:
