@@ -48,7 +48,7 @@ def prreq():
     
     # Delete data
     if method_status == 'DELETE':
-        status_ = deleteData(input_json)
+        status_ = deleteData()
     
     # View data
     if method_status == 'VIEW':
@@ -86,7 +86,7 @@ def insertData(input_json):
         status_ = {'STATUS':'INSERT_DATA_NO'}
         return status_
             
-def deleteData(input_json):
+def deleteData():
     try: 
         data = Database.query.all()
         for i in data: 
@@ -154,7 +154,7 @@ def checkStanding(status, time, weight):
                         status_ = 'LEFT' # Left
                     else:
                         status_ = 'NORMAL' # Normal 
-            else:
+            else: 
                 status_ = 'CHECKING_DEL_TIME'
         else:
             status_ = 'CHECKING_DEL_SAME'   
