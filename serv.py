@@ -181,9 +181,7 @@ def checkStanding(input_json):
             elif left > 700 and right < 600:
                 status_ = 'LEFT' # Left
             else:
-                status_ = 'NORMAL' # Normal 
-            
-            deleteByTime(t)  
+                status_ = 'NORMAL' # Normal  
                 
         if status[0] == 'LEFT' and status[1] == 'RIGHT':
             left = int(weight[0])
@@ -197,7 +195,7 @@ def checkStanding(input_json):
             else:
                 status_ = 'NORMAL' # Normal 
         
-            deleteByTime(t)   
+        deleteByTime(t)   
             
         return {'STATUS':status_}
     except Exception as a:
