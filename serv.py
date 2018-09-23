@@ -64,7 +64,7 @@ def prreq():
             
     # Check insert
     if method_status == 'CHECK_INSERT':
-        data_length, id, status, weight, time = viewData(input_json) 
+        data_length, id, status, weight, time = checkInsert(input_json) 
         if data_length != 0:
             status_ = []
 #            for i in range(data_length):
