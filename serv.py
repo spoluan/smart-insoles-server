@@ -112,10 +112,10 @@ def deleteData():
 def deleteByTime(input_json):
     try: 
         condition = input_json['TIME']
-        data = Database.query.filter(time=condition)
+        data = Database.query.filter(Database.time=condition)
         db.session.delete(data) 
         db.session.commit()
-        status_ = {'STATUS':''}
+        status_ = {'STATUS':'DELETE_BY_TIME_YES'}
         return status_
     except Exception as e: 
         status_ = {'STATUS':'DELETE_BY_TIME_NO {}' . format(e)}
