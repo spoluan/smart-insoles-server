@@ -19,11 +19,13 @@ class Database(db.Model):
     status = db.Column(db.String(20)) # right | left
     weight = db.Column(db.Integer)
     time = db.Column(db.String(20))
+    name = db.Column(db.String(20))
     
-    def __init__(self, status, weight, time): 
+    def __init__(self, status, weight, time, name): 
         self.status = status
         self.weight = weight
         self.time = time
+        self.name = name
         
     def __repr__(self):
         return '<id %r>' % self.id
@@ -84,7 +86,7 @@ def createTable(input_json):
 def insertData(input_json):
     try: 
         if checkInsert(input_json) == True:
-            db.session.add(Database(input_json['STATUS'], input_json['WEIGHT'], input_json['TIME']))
+            db.session.add(Database(input_json['STATUS'], input_json['WEIGHT'], input_json['TIME'], input_json['NAME']))
             db.session.commit()
             status_ = {'STATUS':'INSERT_DATA_OK'}
         else:
@@ -111,9 +113,10 @@ def deleteData():
 def deleteByTime(input_json):
     try: 
         condition = input_json['TIME']
+        n = input_json['NAME']
         data = Database.query.all()
         for i in data:  
-            if i.time == condition:
+            if i.time == condition and i.name == n:
                 data = Database.query.filter_by(id=i.id).first() 
                 db.session.delete(data) 
         db.session.commit()
@@ -145,10 +148,11 @@ def checkInsert(input_json):
     try: 
         t = input_json['TIME']  
         s = input_json['STATUS']
+        n = input_json['NAME']
         data = Database.query.all() 
         id = [] 
         for i in data:
-            if i.time == t and i.status == s:
+            if i.time == t and i.status == s and i.name == n:
                 id.append(i.id) 
          
         if len(id) != 0:
@@ -161,11 +165,12 @@ def checkInsert(input_json):
 def checkStanding(input_json): 
     try: # Handle array exception  
         t = input_json['TIME']
+        n = input_json['NAME']
         data = Database.query.all()
         status = []  
         weight = []
         for i in data: 
-            if t == i.time:
+            if t == i.time and i.name == n:
                 status.append(i.status)
                 weight.append(i.weight)
                 
