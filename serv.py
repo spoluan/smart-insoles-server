@@ -43,8 +43,8 @@ def prreq():
         status_ = createTable(input_json)  
     
     # Insert data
-    if method_status == 'INSERT':   
-        status_ = insertData(input_json)  
+    if method_status == 'INSERT':     
+        status_ = insertData(input_json)   
     
     # Delete data
     if method_status == 'DELETE':
@@ -59,19 +59,7 @@ def prreq():
                 status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
             status_ = {'STATUS':status_}
         else:
-            status_ = {'STATUS':'EMPTY'}
-      
-            
-    # Check insert
-    if method_status == 'CHECK_INSERT':
-        data_length, id, status, weight, time = checkInsert(input_json) 
-        if data_length != 0:
-            status_ = []
-            for i in range(data_length):
-                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
-            status_ = {'STATUS':status_}
-        else:
-            status_ = {'STATUS':'EMPTY'}
+            status_ = {'STATUS':'EMPTY'} 
     
     # 1407BLAB check standing method
     if method_status == 'CHECK':
@@ -95,9 +83,13 @@ def createTable(input_json):
     
 def insertData(input_json):
     try: 
-        db.session.add(Database(input_json['STATUS'], input_json['WEIGHT'], input_json['TIME']))
-        db.session.commit()
-        status_ = {'STATUS':'INSERT_DATA_OK'}
+        if checkInsert(input_json) == True:
+            db.session.add(Database(input_json['STATUS'], input_json['WEIGHT'], input_json['TIME']))
+            db.session.commit()
+            status_ = {'STATUS':'INSERT_DATA_OK'}
+        else:
+            status_ = {'STATUS':'INSERT_DATA_NO'}
+            
         return status_
     except:
         status_ = {'STATUS':'INSERT_DATA_NO'}
@@ -151,21 +143,15 @@ def checkInsert(input_json):
         t = input_json['TIME']  
         s = input_json['STATUS']
         data = Database.query.all() 
-        id = []
-        status = []
-        weight = []
-        time = []
+        id = [] 
         for i in data:
             if i.time == t and i.status == s :
-                id.append(i.id)
-                status.append(i.status)
-                weight.append(i.weight)
-                time.append(i.time)  
-        
-        return len(id), id, status, weight, time
-    
-    except:
-        return 'EMPTY'
+                id.append(i.id) 
+         
+        if len(id) != 0:
+            return False
+        else:
+            return True 
     
 def checkStanding(status, time, weight): 
     try: # Handle array exception   
