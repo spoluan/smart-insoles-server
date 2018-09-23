@@ -119,8 +119,7 @@ def viewData(input_json):
     try: 
         condition = input_json['TIME']
         if condition == '':
-            data = Database.query.all()
-            data = Database.query.filter_by(time=condition).first()
+            data = Database.query.all() 
 #        data = Database.query.all()
         else:
             data = Database.query.filter_by(time=condition).first()
