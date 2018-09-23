@@ -67,6 +67,10 @@ def prreq():
             status_ = {'STATUS':status_}
         else:
             status_ = {'STATUS':'EMPTY'} 
+            
+    # Get tag list
+    if method_status == 'TAG_LIST':
+        status_ = tagNameList()
     
     # 1407BLAB check standing method
     if method_status == 'CHECK': 
@@ -163,6 +167,20 @@ def checkInsert(input_json):
             return True 
     except:
         return False
+
+def tagNameList():
+    try:  
+        data = Database.query.all()  
+        name = []
+        for i in data:  
+            name.append(i.name)
+        
+        if len(name) > 0:
+            return {'STATUS':name} 
+        else:
+            return {'STATUS':'EMPTY'}
+    except:
+        return {'STATUS':'EMPTY'}
     
 def checkStanding(input_json): 
     try: # Handle array exception  
@@ -204,7 +222,7 @@ def checkStanding(input_json):
         
         deleteByTime(input_json)   
             
-        return {'STATUS':status_}
+        return {'STATUS':status_, 'NAME':''}
     except Exception as a:
         status_ = {'STATUS':'CHECKING_NO'}
         return status_
