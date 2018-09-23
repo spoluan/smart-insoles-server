@@ -132,7 +132,7 @@ def viewData(input_json):
                 weight.append(i.weight)
                 time.append(i.time)  
         
-        return condition, id, status, weight, time
+        return len(data), id, status, weight, time
     
     except:
         return 'EMPTY'
