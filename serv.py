@@ -6,6 +6,7 @@
 
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy # Ref: https://www.codementor.io/garethdwyer/building-a-crud-application-with-flask-and-sqlalchemy-dm3wv7yu2
+# http://docs.sqlalchemy.org/en/rel_0_9/orm/tutorial.html
 import os
   
 app = Flask(__name__) 
@@ -111,7 +112,7 @@ def deleteData():
 def deleteByTime(input_json):
     try: 
         condition = input_json['TIME']
-        data = Database.query.filter_by(time=condition).first()
+        data = Database.query.filter(time=condition)
         db.session.delete(data) 
         db.session.commit()
         status_ = {'STATUS':''}
