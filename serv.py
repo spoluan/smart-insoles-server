@@ -49,9 +49,31 @@ def prreq():
     # Delete data
     if method_status == 'DELETE':
         status_ = deleteData()
+        
+    # View data
+    if method_status == 'VIEW':
+        data_length, id, status, weight, time = viewData(input_json) 
+        if data_length != 0:
+            status_ = []
+            for i in range(data_length):
+                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
+            status_ = {'STATUS':status_}
+        else:
+            status_ = {'STATUS':'EMPTY'}
     
     # View data
     if method_status == 'VIEW':
+        data_length, id, status, weight, time = viewData() 
+        if data_length != 0:
+            status_ = []
+            for i in range(data_length):
+                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
+            status_ = {'STATUS':status_}
+        else:
+            status_ = {'STATUS':'EMPTY'}
+            
+    # Check insert
+    if method_status == 'CHECK_INSERT':
         data_length, id, status, weight, time = viewData(input_json) 
         if data_length != 0:
             status_ = []
@@ -116,17 +138,35 @@ def deleteByTime(input_json):
         status_ = {'STATUS':'DELETE_BY_TIME_NO'}
         return status_
 
-def viewData(input_json):
+def viewData():
+    try:  
+        data = Database.query.all() 
+        id = []
+        status = []
+        weight = []
+        time = []
+        for i in data: 
+            id.append(i.id)
+            status.append(i.status)
+            weight.append(i.weight)
+            time.append(i.time)  
+        
+        return len(id), id, status, weight, time
+    
+    except:
+        return 'EMPTY'
+
+def checkInsert(input_json):
     try: 
         time = input_json['TIME']  
-        status = inptu_json['STATUS']
+        status = input_json['STATUS']
         data = Database.query.all() 
         id = []
         status = []
         weight = []
         time = []
         for i in data:
-            if i.time == condition and i.status == status :
+            if i.time == time and i.status != status :
                 id.append(i.id)
                 status.append(i.status)
                 weight.append(i.weight)
