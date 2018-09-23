@@ -176,7 +176,7 @@ def tagNameList():
             name.append(i.name)
         
         if len(name) > 0:
-            return {'STATUS':name} 
+            return {'STATUS':list(set(name))} 
         else:
             return {'STATUS':'EMPTY'}
     except:
