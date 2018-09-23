@@ -195,9 +195,9 @@ def checkStanding(input_json):
             else:
                 status_ = 'NORMAL' # Normal 
         
-        deleteByTime(t)   
+        status_ = deleteByTime(t)   
             
-        return {'STATUS':status_}
+        return status_
     except Exception as a:
         status_ = {'STATUS':'CHECKING_NO {}' . format(a)}
         return status_
