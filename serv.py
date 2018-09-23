@@ -122,7 +122,7 @@ def viewData(input_json):
             data = Database.query.all() 
 #        data = Database.query.all()
         else:
-            data = db.session.query(Database).filter(Database.time == condition) 
+            data = db.session.query(Database).filter(Database.time == '1:3:32') 
         
         id = []
         status = []
