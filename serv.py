@@ -159,12 +159,13 @@ def checkInsert(input_json):
         return False
     
 def checkStanding(input_json): 
-    try: # Handle array exception   
+    try: # Handle array exception  
+        t = input_json['TIME']
         data = Database.query.all()
         status = []  
         weight = []
         for i in data: 
-            if input_json['TIME'] == i.time:
+            if t == i.time:
                 status.append(i.status)
                 weight.append(i.weight)
                 
@@ -182,7 +183,7 @@ def checkStanding(input_json):
             else:
                 status_ = 'NORMAL' # Normal 
             
-            deleteByTime(input_json['TIME'])  
+            deleteByTime(t)  
                 
         if status[0] == 'LEFT' and status[1] == 'RIGHT':
             left = int(weight[0])
@@ -196,7 +197,7 @@ def checkStanding(input_json):
             else:
                 status_ = 'NORMAL' # Normal 
         
-            deleteByTime(input_json['TIME'])   
+            deleteByTime(t)   
             
         return {'STATUS':status_}
     except Exception as a:
