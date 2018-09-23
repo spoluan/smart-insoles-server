@@ -52,15 +52,14 @@ def prreq():
     
     # View data
     if method_status == 'VIEW':
-        data_length, id, status, weight, time = viewData(input_json)
-        status_ = {'STATUS':data_length}
-        
-#        if data_length != 0:
-#            status_ = []
-#            for i in range(data_length):
-#                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
-#        else:
-#            status_ = {'STATUS':'EMPTY'}
+        data_length, id, status, weight, time = viewData(input_json) 
+        if data_length != 0:
+            status_ = []
+            for i in range(data_length):
+                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
+            status_ = {'STATUS':status_}
+        else:
+            status_ = {'STATUS':'EMPTY'}
     
     # 1407BLAB check standing method
     if method_status == 'CHECK':
