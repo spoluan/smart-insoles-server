@@ -55,9 +55,9 @@ def prreq():
         data_length, id, status, weight, time = viewData(input_json) 
         if data_length != 0:
             status_ = []
-#            for i in range(data_length):
-#                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
-            status_ = {'STATUS':'{}, {}, {}' . format(status, weight, time)}
+            for i in range(data_length):
+                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
+            status_ = {'STATUS':status_}
         else:
             status_ = {'STATUS':'EMPTY'}
     
@@ -118,20 +118,21 @@ def deleteByTime(input_json):
 
 def viewData(input_json):
     try: 
-        condition = input_json['TIME']  
+        time = input_json['TIME']  
+        status = inptu_json['STATUS']
         data = Database.query.all() 
         id = []
         status = []
         weight = []
         time = []
         for i in data:
-            if i.time == condition:
+            if i.time == condition and i.status == status :
                 id.append(i.id)
                 status.append(i.status)
                 weight.append(i.weight)
                 time.append(i.time)  
         
-        return len(data), id, status, weight, time
+        return len(id), id, status, weight, time
     
     except:
         return 'EMPTY'
