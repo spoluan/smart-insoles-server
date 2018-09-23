@@ -145,13 +145,15 @@ def checkInsert(input_json):
         data = Database.query.all() 
         id = [] 
         for i in data:
-            if i.time == t and i.status == s :
+            if i.time == t and i.status == s:
                 id.append(i.id) 
          
         if len(id) != 0:
             return False
         else:
             return True 
+    except:
+        return False
     
 def checkStanding(status, time, weight): 
     try: # Handle array exception   
