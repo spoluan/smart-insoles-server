@@ -67,9 +67,9 @@ def prreq():
         data_length, id, status, weight, time = checkInsert(input_json) 
         if data_length != 0:
             status_ = []
-#            for i in range(data_length):
-#                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
-            status_ = {'STATUS':'{}, {}, {}, {}, {}' . format(data_length, id, status, weight, time)}
+            for i in range(data_length):
+                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
+            status_ = {'STATUS':status_}
         else:
             status_ = {'STATUS':'EMPTY'}
     
@@ -148,15 +148,15 @@ def viewData():
 
 def checkInsert(input_json):
     try: 
-        time = input_json['TIME']  
-        status = input_json['STATUS']
+        t = input_json['TIME']  
+        s = input_json['STATUS']
         data = Database.query.all() 
         id = []
         status = []
         weight = []
         time = []
         for i in data:
-            if i.time == time and i.status == status :
+            if i.time == t and i.status == s :
                 id.append(i.id)
                 status.append(i.status)
                 weight.append(i.weight)
