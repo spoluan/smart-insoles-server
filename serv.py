@@ -71,7 +71,7 @@ def prreq():
         
     # Delete by time
     if method_status == 'DEL_BY_TIME':
-        deleteByTime(input_json)
+        status_ = deleteByTime(input_json)
         
     return jsonify(status_) 
 
