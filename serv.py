@@ -120,19 +120,23 @@ def viewData(input_json):
         condition = input_json['TIME']
         if condition == '':
             data = Database.query.all() 
+            id = []
+            status = []
+            weight = []
+            time = []
+            for i in data:
+                id.append(i.id)
+                status.append(i.status)
+                weight.append(i.weight)
+                time.append(i.time)  
 #        data = Database.query.all()
         else:
             data = db.session.query(Database).filter(Database.time == '1:3:32') 
+            id = []
+            status = []
+            weight = []
+            time = []
         
-        id = []
-        status = []
-        weight = []
-        time = []
-        for i in data:
-            id.append(i.id)
-            status.append(i.status)
-            weight.append(i.weight)
-            time.append(i.time)  
             
         return len(data), id, status, weight, time
     
