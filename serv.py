@@ -67,9 +67,8 @@ def prreq():
             status_ = {'STATUS':'EMPTY'} 
     
     # 1407BLAB check standing method
-    if method_status == 'CHECK':
-        data_length, id, status, weight, time = viewData() 
-        status_ = checkStanding(status, time, weight)  
+    if method_status == 'CHECK': 
+        status_ = checkStanding(input_json)
         
     return jsonify(status_) 
 
@@ -159,40 +158,45 @@ def checkInsert(input_json):
     except:
         return False
     
-def checkStanding(status, time, weight): 
+def checkStanding(input_json): 
     try: # Handle array exception   
-        if (status[0] == 'RIGHT' and status[1] == 'LEFT') or (status[0] == 'LEFT' and status[1] == 'RIGHT'): 
-            if time[0] == time[1]:
-                right = 0
-                left = 0
-                if status[0] == 'RIGHT' and status[1] == 'LEFT':
-                    right = int(weight[0])
-                    left = int(weight[1]) 
-                    if right > 700 and left > 700 or (right < 100 and left < 100):
-                        status_ = 'NORMAL' # Normal
-                    elif left < 600 and right > 700:
-                        status_ = 'RIGHT' # Right
-                    elif left > 700 and right < 600:
-                        status_ = 'LEFT' # Left
-                    else:
-                        status_ = 'NORMAL' # Normal 
-                        
-                if status[0] == 'LEFT' and status[1] == 'RIGHT':
-                    left = int(weight[0])
-                    right = int(weight[1]) 
-                    if right > 700 and left > 700 or (right < 100 and left < 100):
-                        status_ = 'NORMAL' # Normal
-                    elif left < 600 and right > 700:
-                        status_ = 'RIGHT' # Right
-                    elif left > 700 and right < 600:
-                        status_ = 'LEFT' # Left
-                    else:
-                        status_ = 'NORMAL' # Normal 
-                deleteData(time[0]) # time[0] = time[1]
-            else: 
-                status_ = 'WAITING' 
-        else: 
-            status_ = 'WAITING' 
+        data = Database.query.all()
+        status = []  
+        weight = []
+        for i in data: 
+            if input_json['TIME'] == i.time:
+                status.append(i.status)
+                weight.append(i.weight)
+                
+        right = 0
+        left = 0
+        if status[0] == 'RIGHT' and status[1] == 'LEFT':
+            right = int(weight[0])
+            left = int(weight[1]) 
+            if right > 700 and left > 700 or (right < 100 and left < 100):
+                status_ = 'NORMAL' # Normal
+            elif left < 600 and right > 700:
+                status_ = 'RIGHT' # Right
+            elif left > 700 and right < 600:
+                status_ = 'LEFT' # Left
+            else:
+                status_ = 'NORMAL' # Normal 
+            
+            deleteData(input_json['TIME'])  
+                
+        if status[0] == 'LEFT' and status[1] == 'RIGHT':
+            left = int(weight[0])
+            right = int(weight[1]) 
+            if right > 700 and left > 700 or (right < 100 and left < 100):
+                status_ = 'NORMAL' # Normal
+            elif left < 600 and right > 700:
+                status_ = 'RIGHT' # Right
+            elif left > 700 and right < 600:
+                status_ = 'LEFT' # Left
+            else:
+                status_ = 'NORMAL' # Normal 
+        
+            deleteData(input_json['TIME'])   
             
         return {'STATUS':status_}
     except:
