@@ -117,27 +117,18 @@ def deleteByTime(input_json):
 
 def viewData(input_json):
     try: 
-        condition = input_json['TIME']
-        if condition == '':
-            data = Database.query.all() 
-            id = []
-            status = []
-            weight = []
-            time = []
-            for i in data:
+        condition = input_json['TIME']  
+        data = Database.query.all() 
+        id = []
+        status = []
+        weight = []
+        time = []
+        for i in data:
+            if condition == time:
                 id.append(i.id)
                 status.append(i.status)
                 weight.append(i.weight)
                 time.append(i.time)  
-#        data = Database.query.all()
-        else:
-            data = Database.query.filter_by(time=condition).first()
-            data = db.session.query(data) 
-            id = []
-            status = []
-            weight = []
-            time = []
-        
             
         return len(data), id, status, weight, time
     
