@@ -52,7 +52,7 @@ def prreq():
         
     # View data
     if method_status == 'VIEW':
-        data_length, id, status, weight, time = viewData(input_json) 
+        data_length, id, status, weight, time = viewData() 
         if data_length != 0:
             status_ = []
             for i in range(data_length):
@@ -60,17 +60,7 @@ def prreq():
             status_ = {'STATUS':status_}
         else:
             status_ = {'STATUS':'EMPTY'}
-    
-    # View data
-    if method_status == 'VIEW':
-        data_length, id, status, weight, time = viewData() 
-        if data_length != 0:
-#            temp = []
-#            for i in range(data_length):
-#                temp.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
-            status_ = {'STATUS':'{},{},{},{},{}' . format(data_length, id, status, weight, time)}
-        else:
-            status_ = {'STATUS':'EMPTY'}
+      
             
     # Check insert
     if method_status == 'CHECK_INSERT':
