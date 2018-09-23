@@ -69,7 +69,7 @@ def prreq():
             status_ = []
             for i in range(data_length):
                 status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
-         
+            status_ = {'STATUS':status_}
         else:
             status_ = {'STATUS':'EMPTY'}
     
