@@ -67,9 +67,9 @@ def prreq():
         data_length, id, status, weight, time = viewData(input_json) 
         if data_length != 0:
             status_ = []
-            for i in range(data_length):
-                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
-            status_ = {'STATUS':status_}
+#            for i in range(data_length):
+#                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
+            status_ = {'STATUS':'{}, {}, {}, {}, {}' . format(data_length, id, status, weight, time)}
         else:
             status_ = {'STATUS':'EMPTY'}
     
