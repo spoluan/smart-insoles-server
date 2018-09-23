@@ -51,6 +51,10 @@ def prreq():
     if method_status == 'DELETE':
         status_ = deleteData()
         
+    # Delete by time
+    if method_status == 'DEL_BY_TIME':
+        status_ = deleteByTime(input_json)
+        
     # View data
     if method_status == 'VIEW':
         data_length, id, status, weight, time = viewData() 
@@ -65,11 +69,7 @@ def prreq():
     # 1407BLAB check standing method
     if method_status == 'CHECK':
         data_length, id, status, weight, time = viewData() 
-        status_ = checkStanding(status, time, weight) 
-        
-    # Delete by time
-    if method_status == 'DEL_BY_TIME':
-        status_ = deleteByTime(input_json)
+        status_ = checkStanding(status, time, weight)  
         
     return jsonify(status_) 
 
@@ -188,13 +188,11 @@ def checkStanding(status, time, weight):
                         status_ = 'LEFT' # Left
                     else:
                         status_ = 'NORMAL' # Normal 
-                deleteData()
+                deleteData(time[0]) # time[0] = time[1]
             else: 
-                status_ = 'CHECKING_DEL_TIME'
-                deleteData()
+                status_ = 'WAITING' 
         else: 
-            status_ = 'CHECKING_DEL_SAME' 
-            deleteData()  
+            status_ = 'WAITING' 
             
         return {'STATUS':status_}
     except:
