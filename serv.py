@@ -69,6 +69,10 @@ def prreq():
         data_length, id, status, weight, time = viewData() 
         status_ = checkStanding(status, time, weight) 
         
+    # Delete by time
+    if method_status == 'DEL_BY_TIME':
+        deleteByTime(input_json)
+        
     return jsonify(status_) 
 
 def createTable(input_json):
@@ -101,6 +105,18 @@ def deleteData():
         return status_
     except: 
         status_ = {'STATUS':'DELETE_DATA_NO'}
+        return status_
+    
+def deleteByTime(input_json):
+    try: 
+        time = input_json['DEL_BY_TIME']
+        data = Database.query.filter_by(time=time).first()
+        db.session.delete(data) 
+        db.session.commit()
+        status_ = {'STATUS':'DELETE_BY_TIME_OK'}
+        return status_
+    except: 
+        status_ = {'STATUS':'DELETE_BY_TIME_NO'}
         return status_
 
 def viewData():
