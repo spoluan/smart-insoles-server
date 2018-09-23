@@ -43,7 +43,7 @@ def prreq():
     
     # Create table
     if method_status == 'CREATE':
-        status_ = createTable(input_json)  
+        status_ = createTable()  
     
     # Insert data
     if method_status == 'INSERT':     
@@ -74,7 +74,7 @@ def prreq():
         
     return jsonify(status_) 
 
-def createTable(input_json):
+def createTable():
     try: 
         db.create_all()
         status_ = {'STATUS':'CREATE_TABLE_OK'}
