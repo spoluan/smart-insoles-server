@@ -131,7 +131,8 @@ def viewData(input_json):
                 time.append(i.time)  
 #        data = Database.query.all()
         else:
-            data = db.session.query(Database).filter(Database.time == '1:3:32') 
+            data = Database.query.filter_by(time=condition).first()
+            data = db.session.query(data) 
             id = []
             status = []
             weight = []
