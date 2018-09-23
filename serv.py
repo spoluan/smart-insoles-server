@@ -43,12 +43,8 @@ def prreq():
         status_ = createTable(input_json)  
     
     # Insert data
-    if method_status == 'INSERT': 
-        availability, data_length, id, status, weight, time = getAvailability(input_json)
-        if availability == True: 
-            status_ = insertData(input_json)
-        else:
-            status_ = {'STATUS':'INSERT_NO'}
+    if method_status == 'INSERT':   
+        status_ = insertData(input_json)  
     
     # Delete data
     if method_status == 'DELETE':
@@ -80,12 +76,12 @@ def createTable(input_json):
         db.create_all()
         status_ = {'STATUS':'CREATE_TABLE_OK'}
         return status_
-    except:
+    except: 
         status_ = {'STATUS':'CREATE_TABLE_NO'}
         return status_
     
 def insertData(input_json):
-    try:
+    try: 
         db.session.add(Database(input_json['STATUS'], input_json['WEIGHT'], input_json['TIME']))
         db.session.commit()
         status_ = {'STATUS':'INSERT_DATA_OK'}
@@ -121,7 +117,9 @@ def deleteByTime(input_json):
 
 def viewData():
     try: 
-        data = Database.query.all()
+        condition = input_json['TIME']
+#        data = Database.query.all()
+        data = Database.query.filter_by(time=condition).first()
         id = []
         status = []
         weight = []
@@ -134,16 +132,6 @@ def viewData():
         return len(data), id, status, weight, time
     except:
         return 'EMPTY'
-    
-def getAvailability(input_json): 
-    try:  
-        data_length, id, status, weight, time = viewData() 
-        if data_length == 2:
-            return False, data_length, id, status, weight, time
-        else:
-            return True, data_length, id, status, weight, time
-    except: 
-        return False, 0, 0, 0, 0, 0
     
 def checkStanding(status, time, weight): 
     try: # Handle array exception   
