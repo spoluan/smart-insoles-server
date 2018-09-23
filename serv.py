@@ -124,7 +124,7 @@ def viewData(input_json):
         weight = []
         time = []
         for i in data:
-            if condition == time:
+            if i.time == condition:
                 id.append(i.id)
                 status.append(i.status)
                 weight.append(i.weight)
