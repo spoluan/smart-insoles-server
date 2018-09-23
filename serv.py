@@ -115,11 +115,14 @@ def deleteByTime(input_json):
         status_ = {'STATUS':'DELETE_BY_TIME_NO'}
         return status_
 
-def viewData():
+def viewData(input_json):
     try: 
         condition = input_json['TIME']
+        if condition == '':
+            data = Database.query.all()
 #        data = Database.query.all()
-        data = Database.query.filter_by(time=condition).first()
+        else:
+            data = Database.query.filter_by(time=condition).first()
         id = []
         status = []
         weight = []
