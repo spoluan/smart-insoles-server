@@ -182,7 +182,7 @@ def checkStanding(input_json):
             else:
                 status_ = 'NORMAL' # Normal 
             
-            deleteData(input_json['TIME'])  
+            deleteByTime(input_json['TIME'])  
                 
         if status[0] == 'LEFT' and status[1] == 'RIGHT':
             left = int(weight[0])
