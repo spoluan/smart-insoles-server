@@ -112,8 +112,11 @@ def deleteData():
 def deleteByTime(input_json):
     try: 
         condition = input_json['TIME']
-        data = Database.query.filter(Database.time=condition)
-        db.session.delete(data) 
+        data = Database.query.all()
+        for i in data:  
+            if i.time == condition:
+                data = Database.query.filter_by(id=i.id).first() 
+                db.session.delete(data) 
         db.session.commit()
         status_ = {'STATUS':'DELETE_BY_TIME_YES'}
         return status_
