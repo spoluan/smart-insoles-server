@@ -65,10 +65,10 @@ def prreq():
     if method_status == 'VIEW':
         data_length, id, status, weight, time = viewData() 
         if data_length != 0:
-            status_ = []
+            temp = []
             for i in range(data_length):
-                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
-            
+                temp.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i]})
+            status_ = {'STATUS':'SUCCESS'}
         else:
             status_ = {'STATUS':'EMPTY'}
             
