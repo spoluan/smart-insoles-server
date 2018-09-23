@@ -120,7 +120,7 @@ def deleteByTime(input_json):
         status_ = {'STATUS':'DELETE_BY_TIME_YES'}
         return status_
     except Exception as e: 
-        status_ = {'STATUS':'DELETE_BY_TIME_NO {}' . format(e)}
+        status_ = {'STATUS':'DELETE_BY_TIME_NO'}
         return status_
 
 def viewData():
@@ -199,7 +199,7 @@ def checkStanding(input_json):
             
         return {'STATUS':status_}
     except Exception as a:
-        status_ = {'STATUS':'CHECKING_NO {}' . format(a)}
+        status_ = {'STATUS':'CHECKING_NO'}
         return status_
 
 
