@@ -52,7 +52,7 @@ def prreq():
     
     # View data
     if method_status == 'VIEW':
-        data_length, id, status, weight, time = viewData()
+        data_length, id, status, weight, time = viewData(input_json)
         if data_length != 0:
             status_ = []
             for i in range(data_length):
