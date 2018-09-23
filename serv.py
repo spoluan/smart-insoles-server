@@ -109,7 +109,7 @@ def deleteData():
     
 def deleteByTime(input_json):
     try: 
-        condition = input_json['DEL_BY_TIME']
+        condition = input_json['TIME']
         data = Database.query.filter_by(time=condition).first()
         db.session.delete(data) 
         db.session.commit()
