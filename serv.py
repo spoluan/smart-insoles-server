@@ -156,7 +156,7 @@ def checkInsert(input_json):
         weight = []
         time = []
         for i in data:
-            if i.time == time and i.status != status :
+            if i.time == time and i.status == status :
                 id.append(i.id)
                 status.append(i.status)
                 weight.append(i.weight)
