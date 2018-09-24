@@ -63,7 +63,7 @@ def prreq():
         if data_length != 0:
             status_ = []
             for i in range(data_length):
-                status_.append({'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i], 'NAME':name[i]})
+                status_.append([{'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i], 'NAME':name[i]}])
             status_ = {'STATUS':status_}
         else:
             status_ = {'STATUS':'EMPTY'} 
@@ -176,7 +176,7 @@ def tagNameList():
             name.append(i.name)
         
         if len(name) > 0:
-            return {'STATUS':list(set(name))} 
+            return {'STATUS':list(set(name))} # Applied distinction
         else:
             return {'STATUS':'EMPTY'}
     except:
@@ -222,7 +222,7 @@ def checkStanding(input_json):
         
         deleteByTime(input_json)   
             
-        return {'STATUS':status_, 'NAME':''}
+        return {'STATUS':status_, 'NAME':n}
     except Exception as a:
         status_ = {'STATUS':'CHECKING_NO'}
         return status_
