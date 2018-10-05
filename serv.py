@@ -16,14 +16,12 @@ db = SQLAlchemy(app)
 class Database(db.Model): 
     __tablename__ = "tb_mss1407blab"
     id = db.Column(db.Integer, primary_key = True)
-    status = db.Column(db.String(20)) # right | left
-    weight = db.Column(db.Integer)
+    status = db.Column(db.String(20)) # right | left 
     time = db.Column(db.String(20))
     name = db.Column(db.String(20))
     
-    def __init__(self, status, weight, time, name): 
-        self.status = status
-        self.weight = weight
+    def __init__(self, status, time, name): 
+        self.status = status 
         self.time = time
         self.name = name
         
@@ -59,22 +57,18 @@ def prreq():
         
     # View data
     if method_status == 'VIEW':
-        data_length, id, status, weight, time, name = viewData() 
+        data_length, id, status, time, name = viewData() 
         if data_length != 0:
             status_ = []
             for i in range(data_length):
-                status_.append([{'DATA_INDEX':i, 'STATUS':status[i], 'WEIGHT': weight[i], 'TIME':time[i], 'NAME':name[i]}])
+                status_.append([{'DATA_INDEX':i, 'STATUS':status[i], 'TIME':time[i], 'NAME':name[i]}])
             status_ = {'STATUS':status_}
         else:
             status_ = {'STATUS':'EMPTY'} 
             
     # Get tag list
     if method_status == 'TAG_LIST':
-        status_ = tagNameList()
-    
-    # 1407BLAB check standing method
-    if method_status == 'CHECK': 
-        status_ = checkStanding(input_json)
+        status_ = tagNameList() 
         
     return jsonify(status_) 
 
@@ -90,7 +84,7 @@ def createTable():
 def insertData(input_json):
     try: 
         if checkInsert(input_json) == True:
-            db.session.add(Database(input_json['STATUS'], input_json['WEIGHT'], input_json['TIME'], input_json['NAME']))
+            db.session.add(Database(input_json['STATUS'], input_json['TIME'], input_json['NAME']))
             db.session.commit()
             status_ = {'STATUS':'INSERT_DATA_OK'}
         else:
@@ -134,18 +128,16 @@ def viewData():
     try:  
         data = Database.query.all() 
         id = []
-        status = []
-        weight = []
+        status = [] 
         time = []
         name = []
         for i in data: 
             id.append(i.id)
-            status.append(i.status)
-            weight.append(i.weight)
+            status.append(i.status) 
             time.append(i.time)  
             name.append(i.name)
         
-        return len(id), id, status, weight, time, name
+        return len(id), id, status, time, name
     
     except:
         return 'EMPTY'
@@ -180,53 +172,7 @@ def tagNameList():
         else:
             return {'STATUS':'EMPTY'}
     except:
-        return {'STATUS':'EMPTY'}
-    
-def checkStanding(input_json): 
-    try: # Handle array exception  
-        t = input_json['TIME']
-        n = input_json['NAME']
-        data = Database.query.all()
-        status = []  
-        weight = []
-        for i in data: 
-            if t == i.time and i.name == n:
-                status.append(i.status)
-                weight.append(i.weight)
-                
-        right = 0
-        left = 0
-        if status[0] == 'RIGHT' and status[1] == 'LEFT':
-            right = int(weight[0])
-            left = int(weight[1]) 
-            if right > 700 and left > 700 or (right < 100 and left < 100):
-                status_ = 'NORMAL' # Normal
-            elif left < 600 and right > 700:
-                status_ = 'RIGHT' # Right
-            elif left > 700 and right < 600:
-                status_ = 'LEFT' # Left
-            else:
-                status_ = 'NORMAL' # Normal  
-                
-        if status[0] == 'LEFT' and status[1] == 'RIGHT':
-            left = int(weight[0])
-            right = int(weight[1]) 
-            if right > 700 and left > 700 or (right < 100 and left < 100):
-                status_ = 'NORMAL' # Normal
-            elif left < 600 and right > 700:
-                status_ = 'RIGHT' # Right
-            elif left > 700 and right < 600:
-                status_ = 'LEFT' # Left
-            else:
-                status_ = 'NORMAL' # Normal 
-        
-        deleteByTime(input_json)   
-            
-        return {'STATUS':status_, 'NAME':n}
-    except Exception as a:
-        status_ = {'STATUS':'CHECKING_NO'}
-        return status_
-
+        return {'STATUS':'EMPTY'} 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
