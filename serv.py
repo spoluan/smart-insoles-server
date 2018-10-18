@@ -149,12 +149,12 @@ def checkInsert(input_json):
     	id = [] 
     	for i in data:
     		if i.time == time and i.name == name:
-    			id.append(i.id) 
-         
-        if len(id) != 0:
-            return False
-        else:
-            return True 
+    			id.append(i.id)
+
+    	if len(id) != 0:
+    		return False
+    	else:
+    		return True 
     except:
         return False
  
