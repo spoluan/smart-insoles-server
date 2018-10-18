@@ -128,8 +128,8 @@ def viewData():
         time = []
         name = []
         for i in data: 
-            id.append(i.id)
-	        thumb.append(i.thumb)
+        	id.append(i.id)
+        	thumb.append(i.thumb)
 	        outer_ball.append(i.outer_ball)
 	        inner_ball.append(i.inner_ball)
 	        heel.append(i.heel)
