@@ -142,10 +142,9 @@ def viewData():
         return 'EMPTY'
 
 def checkInsert(input_json):
-    try:  
- 
-		time = input_json['TIME'] 
-		name = input_json['NAME'] 
+    try:
+    	time = input_json['TIME'] 
+    	name = input_json['NAME'] 
 
         data = Database.query.all() 
         id = [] 
