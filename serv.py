@@ -144,13 +144,12 @@ def viewData():
 def checkInsert(input_json):
     try:
     	time = input_json['TIME'] 
-    	name = input_json['NAME'] 
-
-        data = Database.query.all() 
-        id = [] 
-        for i in data:
-            if i.time == time and i.name == name:
-                id.append(i.id) 
+    	name = input_json['NAME']
+    	data = Database.query.all()
+    	id = [] 
+    	for i in data:
+    		if i.time == time and i.name == name:
+    			id.append(i.id) 
          
         if len(id) != 0:
             return False
