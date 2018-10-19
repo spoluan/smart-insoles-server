@@ -16,10 +16,10 @@ db = SQLAlchemy(app)
 class Database(db.Model): 
     __tablename__ = "tb_heroku"
     id = db.Column(db.Integer, primary_key = True) 
-    thumb = db.Column(db.String(20))  
-    outer_ball = db.Column(db.String(20))
-    inner_ball = db.Column(db.String(20))
-    heel = db.Column(db.String(20))
+    thumb = db.Column(db.Integer)  
+    outer_ball = db.Column(db.Integer)
+    inner_ball = db.Column(db.Integer)
+    heel = db.Column(db.Integer)
     time = db.Column(db.String(20))
     name = db.Column(db.String(20))
     
