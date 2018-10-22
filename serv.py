@@ -160,15 +160,15 @@ def viewData():
         for i in data: 
         	id.append(i.id)
         	R_HEEL.append(i.R_HEEL)
-		    R_THUMB.append(i.R_THUMB)
-		    R_INNER_BALL.append(i.R_INNER_BALL)
-		    R_OUTER_BALL.append(i.R_OUTER_BALL)
-		    L_HEEL.append(i.L_HEEL)
-		    L_THUMB.append(i.L_THUMB)
-		    L_INNER_BALL.append(i.L_INNER_BALL)
-		    L_OUTER_BALL.append(i.L_OUTER_BALL)
-		    TIME.append(i.TIME)
-		    NAME.append(i.NAME)
+        	R_THUMB.append(i.R_THUMB)
+        	R_INNER_BALL.append(i.R_INNER_BALL)
+        	R_OUTER_BALL.append(i.R_OUTER_BALL)
+        	L_HEEL.append(i.L_HEEL)
+        	L_THUMB.append(i.L_THUMB)
+        	L_INNER_BALL.append(i.L_INNER_BALL)
+        	L_OUTER_BALL.append(i.L_OUTER_BALL)
+        	TIME.append(i.TIME)
+        	NAME.append(i.NAME)
         
         return len(id), id, R_HEEL, R_THUMB, R_INNER_BALL, R_OUTER_BALL, L_HEEL, L_THUMB, L_INNER_BALL, L_OUTER_BALL, TIME, NAME
         
