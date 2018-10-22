@@ -20,25 +20,25 @@ class Database(db.Model):
     R_THUMB = db.Column(db.Integer)
     R_INNER_BALL = db.Column(db.Integer)
     R_OUTER_BALL = db.Column(db.Integer)
-    L_HEEL = db.Column(db.String(20))
-    L_THUMB = db.Column(db.String(20))
-    L_INNER_BALL = db.Column(db.String(20))
-    L_OUTER_BALL = db.Column(db.String(20))
+    L_HEEL = db.Column(db.Integer)
+    L_THUMB = db.Column(db.Integer)
+    L_INNER_BALL = db.Column(db.Integer)
+    L_OUTER_BALL = db.Column(db.Integer)
     TIME = db.Column(db.String(20))
     NAME = db.Column(db.String(20))
     
     def __init__(self, R_HEEL, R_THUMB, R_INNER_BALL, R_OUTER_BALL, L_HEEL, L_THUMB, L_INNER_BALL, L_OUTER_BALL, TIME, NAME): 
-        self.R_HEEL = R_HEEL
-	    self.R_THUMB = R_THUMB
-	    self.R_INNER_BALL = R_INNER_BALL
-	    self.R_OUTER_BALL = R_OUTER_BALL
-	    self.L_HEEL = L_HEEL
-	    self.L_THUMB = L_THUMB
-	    self.L_INNER_BALL = L_INNER_BALL
-	    self.L_OUTER_BALL = L_OUTER_BALL
-	    self.TIME = TIME
-	    self.NAME = NAME
-        
+    	self.R_HEEL = R_HEEL
+    	self.R_THUMB = R_THUMB
+    	self.R_INNER_BALL = R_INNER_BALL
+    	self.R_OUTER_BALL = R_OUTER_BALL
+    	self.L_HEEL = L_HEEL
+    	self.L_THUMB = L_THUMB
+    	self.L_INNER_BALL = L_INNER_BALL
+    	self.L_OUTER_BALL = L_OUTER_BALL
+    	self.TIME = TIME
+    	self.NAME = NAME
+    	
     def __repr__(self):
         return '<id %r>' % self.id
             
