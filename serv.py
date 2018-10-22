@@ -148,15 +148,15 @@ def viewData():
         data = Database.query.all() 
         id = []
         R_HEEL = []
-	    R_THUMB = []
-	    R_INNER_BALL = []
-	    R_OUTER_BALL = []
-	    L_HEEL = []
-	    L_THUMB = []
-	    L_INNER_BALL = []
-	    L_OUTER_BALL = []
-	    TIME = []
-	    NAME = []
+        R_THUMB = []
+        R_INNER_BALL = []
+        R_OUTER_BALL = []
+        L_HEEL = []
+        L_THUMB = []
+        L_INNER_BALL = []
+        L_OUTER_BALL = []
+        TIME = []
+        NAME = []
         for i in data: 
         	id.append(i.id)
         	R_HEEL.append(i.R_HEEL)
