@@ -112,10 +112,10 @@ def insertData(input_json):
             		input_json['R_INNER_BALL'],
             		input_json['R_OUTER_BALL'],
             		input_json['L_HEEL'],
-            		input_json['L_THUMB'] 
-            		input_json['L_INNER_BALL'] 
-            		input_json['L_OUTER_BALL'] 
-            		input_json['TIME'] 
+            		input_json['L_THUMB'],
+            		input_json['L_INNER_BALL'], 
+            		input_json['L_OUTER_BALL'], 
+            		input_json['TIME'], 
             		input_json['NAME']  
             	)
             )
