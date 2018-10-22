@@ -38,7 +38,7 @@ class Database(db.Model):
     	self.L_OUTER_BALL = L_OUTER_BALL
     	self.TIME = TIME
     	self.NAME = NAME
-    	
+
     def __repr__(self):
         return '<id %r>' % self.id
             
@@ -74,15 +74,15 @@ def prreq():
                 status_.append([
                 	{
                 		'DATA_INDEX':i, 
-                		'R_HEEL' : R_HEEL[i] 
-					    'R_THUMB' : R_THUMB[i]
-					    'R_INNER_BALL' : R_INNER_BALL[i]
-					    'R_OUTER_BALL' : R_OUTER_BALL[i]
-					    'L_HEEL' : L_HEEL[i]
-					    'L_THUMB' : L_THUMB[i]
-					    'L_INNER_BALL' : L_INNER_BALL[i]
-					    'L_OUTER_BALL' : L_OUTER_BALL[i]
-					    'TIME' : TIME[i]
+                		'R_HEEL' : R_HEEL[i], 
+					    'R_THUMB' : R_THUMB[i],
+					    'R_INNER_BALL' : R_INNER_BALL[i],
+					    'R_OUTER_BALL' : R_OUTER_BALL[i],
+					    'L_HEEL' : L_HEEL[i],
+					    'L_THUMB' : L_THUMB[i],
+					    'L_INNER_BALL' : L_INNER_BALL[i],
+					    'L_OUTER_BALL' : L_OUTER_BALL[i],
+					    'TIME' : TIME[i],
 					    'NAME' : NAME[i]
                 	}
                 ])
