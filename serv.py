@@ -16,20 +16,28 @@ db = SQLAlchemy(app)
 class Database(db.Model): 
     __tablename__ = "tb_heroku"
     id = db.Column(db.Integer, primary_key = True) 
-    thumb = db.Column(db.Integer)  
-    outer_ball = db.Column(db.Integer)
-    inner_ball = db.Column(db.Integer)
-    heel = db.Column(db.Integer)
-    time = db.Column(db.String(20))
-    name = db.Column(db.String(20))
+    R_HEEL = db.Column(db.Integer)  
+    R_THUMB = db.Column(db.Integer)
+    R_INNER_BALL = db.Column(db.Integer)
+    R_OUTER_BALL = db.Column(db.Integer)
+    L_HEEL = db.Column(db.String(20))
+    L_THUMB = db.Column(db.String(20))
+    L_INNER_BALL = db.Column(db.String(20))
+    L_OUTER_BALL = db.Column(db.String(20))
+    TIME = db.Column(db.String(20))
+    NAME = db.Column(db.String(20))
     
-    def __init__(self, thumb, outer_ball, inner_ball, heel, time, name): 
-        self.thumb = thumb 
-        self.outer_ball = outer_ball
-        self.inner_ball = inner_ball
-        self.heel = heel
-        self.time = time
-        self.name = name
+    def __init__(self, R_HEEL, R_THUMB, R_INNER_BALL, R_OUTER_BALL, L_HEEL, L_THUMB, L_INNER_BALL, L_OUTER_BALL, TIME, NAME): 
+        self.R_HEEL = R_HEEL
+	    self.R_THUMB = R_THUMB
+	    self.R_INNER_BALL = R_INNER_BALL
+	    self.R_OUTER_BALL = R_OUTER_BALL
+	    self.L_HEEL = L_HEEL
+	    self.L_THUMB = L_THUMB
+	    self.L_INNER_BALL = L_INNER_BALL
+	    self.L_OUTER_BALL = L_OUTER_BALL
+	    self.TIME = TIME
+	    self.NAME = NAME
         
     def __repr__(self):
         return '<id %r>' % self.id
@@ -59,11 +67,25 @@ def prreq():
   
     # View data
     if method_status == 'VIEW':
-        data_length, id, thumb, outer_ball, ineer_ball, heel, time, name = viewData() 
+        data_length, id, R_HEEL, R_THUMB, R_INNER_BALL, R_OUTER_BALL, L_HEEL, L_THUMB, L_INNER_BALL, L_OUTER_BALL, TIME, NAME = viewData() 
         if data_length != 0:
             status_ = []
             for i in range(data_length):
-                status_.append([{'DATA_INDEX':i, 'THUMB':thumb[i], 'OUTER_BALL':outer_ball[i], 'INNER_BALL':ineer_ball[i], 'HEEL':heel[i], 'TIME':time[i], 'NAME':name[i]}])
+                status_.append([
+                	{
+                		'DATA_INDEX':i, 
+                		'R_HEEL' : R_HEEL[i] 
+					    'R_THUMB' : R_THUMB[i]
+					    'R_INNER_BALL' : R_INNER_BALL[i]
+					    'R_OUTER_BALL' : R_OUTER_BALL[i]
+					    'L_HEEL' : L_HEEL[i]
+					    'L_THUMB' : L_THUMB[i]
+					    'L_INNER_BALL' : L_INNER_BALL[i]
+					    'L_OUTER_BALL' : L_OUTER_BALL[i]
+					    'TIME' : TIME[i]
+					    'NAME' : NAME[i]
+                	}
+                ])
             status_ = {'STATUS':status_}
         else:
             status_ = {'STATUS':'EMPTY'} 
@@ -85,12 +107,16 @@ def insertData(input_json):
         if checkInsert(input_json) == True:
             db.session.add(
             	Database(
-            		input_json['THUMB'], 
-            		input_json['OUTER_BALL'], 
-            		input_json['INNER_BALL'],
-            		input_json['HEEL'],
-            		input_json['TIME'],
-            		input_json['NAME'] 
+            		input_json['R_HEEL'], 
+            		input_json['R_THUMB'], 
+            		input_json['R_INNER_BALL'],
+            		input_json['R_OUTER_BALL'],
+            		input_json['L_HEEL'],
+            		input_json['L_THUMB'] 
+            		input_json['L_INNER_BALL'] 
+            		input_json['L_OUTER_BALL'] 
+            		input_json['TIME'] 
+            		input_json['NAME']  
             	)
             )
 
@@ -121,34 +147,42 @@ def viewData():
     try:  
         data = Database.query.all() 
         id = []
-        thumb = [] 
-        outer_ball = []
-        inner_ball = []
-        heel = []
-        time = []
-        name = []
+        R_HEEL = []
+	    R_THUMB = []
+	    R_INNER_BALL = []
+	    R_OUTER_BALL = []
+	    L_HEEL = []
+	    L_THUMB = []
+	    L_INNER_BALL = []
+	    L_OUTER_BALL = []
+	    TIME = []
+	    NAME = []
         for i in data: 
         	id.append(i.id)
-        	thumb.append(i.thumb)
-	        outer_ball.append(i.outer_ball)
-	        inner_ball.append(i.inner_ball)
-	        heel.append(i.heel)
-	        time.append(i.time)
-	        name.append(i.name)
+        	R_HEEL.append(i.R_HEEL)
+		    R_THUMB.append(i.R_THUMB)
+		    R_INNER_BALL.append(i.R_INNER_BALL)
+		    R_OUTER_BALL.append(i.R_OUTER_BALL)
+		    L_HEEL.append(i.L_HEEL)
+		    L_THUMB.append(i.L_THUMB)
+		    L_INNER_BALL.append(i.L_INNER_BALL)
+		    L_OUTER_BALL.append(i.L_OUTER_BALL)
+		    TIME.append(i.TIME)
+		    NAME.append(i.NAME)
         
-        return len(id), id, thumb, outer_ball, inner_ball, heel, time, name
-    
+        return len(id), id, R_HEEL, R_THUMB, R_INNER_BALL, R_OUTER_BALL, L_HEEL, L_THUMB, L_INNER_BALL, L_OUTER_BALL, TIME, NAME
+        
     except:
         return 'EMPTY'
 
 def checkInsert(input_json):
     try:
-    	time = input_json['TIME'] 
-    	name = input_json['NAME']
+    	TIME = input_json['TIME'] 
+    	NAME = input_json['NAME']
     	data = Database.query.all()
     	id = [] 
     	for i in data:
-    		if i.time == time and i.name == name:
+    		if i.TIME == TIME and i.NAME == NAME:
     			id.append(i.id)
 
     	if len(id) != 0:
