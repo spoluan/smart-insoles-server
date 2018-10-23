@@ -103,28 +103,25 @@ def createTable():
         return status_
     
 def insertData(input_json):
-    try: 
-        if checkInsert(input_json) == True:
-            db.session.add(
-            	Database(
-            		input_json['R_HEEL'], 
-            		input_json['R_THUMB'], 
-            		input_json['R_INNER_BALL'],
-            		input_json['R_OUTER_BALL'],
-            		input_json['L_HEEL'],
-            		input_json['L_THUMB'],
-            		input_json['L_INNER_BALL'], 
-            		input_json['L_OUTER_BALL'], 
-            		input_json['TIME'], 
-            		input_json['NAME']  
-            	)
-            )
+    try:  
+        db.session.add(
+        	Database(
+        		input_json['R_HEEL'], 
+        		input_json['R_THUMB'], 
+        		input_json['R_INNER_BALL'],
+        		input_json['R_OUTER_BALL'],
+        		input_json['L_HEEL'],
+        		input_json['L_THUMB'],
+        		input_json['L_INNER_BALL'], 
+        		input_json['L_OUTER_BALL'], 
+        		input_json['TIME'], 
+        		input_json['NAME']  
+        	)
+        )
 
-            db.session.commit()
-            status_ = {'STATUS':'INSERT_DATA_OK'}
-        else:
-            status_ = {'STATUS':'INSERT_DATA_NO'}
-            
+        db.session.commit()
+        status_ = {'STATUS':'INSERT_DATA_OK'}
+          
         return status_
     except:
         status_ = {'STATUS':'INSERT_DATA_NO'}
@@ -173,25 +170,11 @@ def viewData():
         return len(id), id, R_HEEL, R_THUMB, R_INNER_BALL, R_OUTER_BALL, L_HEEL, L_THUMB, L_INNER_BALL, L_OUTER_BALL, TIME, NAME
         
     except:
-        return 'EMPTY'
-
-def checkInsert(input_json):
-    try:
-    	TIME = input_json['TIME'] 
-    	NAME = input_json['NAME']
-    	data = Database.query.all()
-    	id = [] 
-    	for i in data:
-    		if i.TIME == TIME and i.NAME == NAME:
-    			id.append(i.id)
-
-    	if len(id) != 0:
-    		return False
-    	else:
-    		return True 
-    except:
-        return False
+        return 'EMPTY' 
  
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
+
+
+    
