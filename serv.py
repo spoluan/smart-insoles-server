@@ -106,8 +106,8 @@ def createTable():
         db.create_all()
         status_ = {'STATUS': 'CREATE_TABLE_OK'}
         return status_
-    except: 
-        status_ = {'STATUS': 'CREATE_TABLE_NO'}
+    except Exception as err: 
+        status_ = {'STATUS': f'CREATE_TABLE_NO {err}'}
         return status_
     
 def insertData(input_json):
@@ -131,8 +131,8 @@ def insertData(input_json):
         status_ = {'STATUS': 'INSERT_DATA_OK'}
           
         return status_
-    except:
-        status_ = {'STATUS': 'INSERT_DATA_NO'}
+    except Exception as err:
+        status_ = {'STATUS': f'INSERT_DATA_NO {err}'}
         return status_
             
 def deleteData():
@@ -144,8 +144,8 @@ def deleteData():
         db.session.commit()
         status_ = {'STATUS': 'DELETE_DATA_OK'}
         return status_
-    except: 
-        status_ = {'STATUS': 'DELETE_DATA_NO'}
+    except Exception as err: 
+        status_ = {'STATUS': f'DELETE_DATA_NO {err}'}
         return status_ 
 
 def viewData():
