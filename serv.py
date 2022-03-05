@@ -17,6 +17,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']   
 db = SQLAlchemy(app)
 
+print('Database url:', os.environ['DATABASE_URL'])
+
 class Database(db.Model): 
     __tablename__ = "tb_heroku_server"
     id = db.Column(db.Integer, primary_key = True) 
