@@ -5,8 +5,9 @@
     # Date modified: March 05, 2022
     # Desc: Heroku server for synchronizing Insoles data
     # Reference:
-        [1] Ref: https://www.codementor.io/garethdwyer/building-a-crud-application-with-flask-and-sqlalchemy-dm3wv7yu2
+        [1] https://www.codementor.io/garethdwyer/building-a-crud-application-with-flask-and-sqlalchemy-dm3wv7yu2
         [2] http://docs.sqlalchemy.org/en/rel_0_9/orm/tutorial.html
+        [3] https://stackoverflow.com/questions/62688256/sqlalchemy-exc-nosuchmoduleerror-cant-load-plugin-sqlalchemy-dialectspostgre
 """
 
 from flask import Flask, request, jsonify
@@ -54,7 +55,7 @@ def index():
     return 'Hello'  
 
 @app.route('/req', methods=['POST'])
-def prreq():  
+def req():  
     status_ = {'':''} 
     input_json = request.get_json(force=True)
     method_status = input_json['METHOD']
