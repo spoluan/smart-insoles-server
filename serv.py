@@ -1,12 +1,16 @@
 
-# File: serv.py
-# Author: Sevendi Eldrige Rifki Poluan
-# Date: September 1, 2018
-# Desc: Heroku server for synchronizing Insoles data and handing request from MSS1407B's lab app
+"""
+    # File: serv.py
+    # Author: Sevendi Eldrige Rifki Poluan
+    # Date modified: March 05, 2022
+    # Desc: Heroku server for synchronizing Insoles data
+    # Reference:
+        [1] Ref: https://www.codementor.io/garethdwyer/building-a-crud-application-with-flask-and-sqlalchemy-dm3wv7yu2
+        [2] http://docs.sqlalchemy.org/en/rel_0_9/orm/tutorial.html
+"""
 
 from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy # Ref: https://www.codementor.io/garethdwyer/building-a-crud-application-with-flask-and-sqlalchemy-dm3wv7yu2
-# http://docs.sqlalchemy.org/en/rel_0_9/orm/tutorial.html
+from flask_sqlalchemy import SQLAlchemy 
 import os
   
 app = Flask(__name__) 
@@ -14,17 +18,31 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
 
 class Database(db.Model): 
-    __tablename__ = "tb_mss1407blab"
-    id = db.Column(db.Integer, primary_key = True)
-    status = db.Column(db.String(20)) # right | left 
-    time = db.Column(db.String(20))
-    name = db.Column(db.String(20))
+    __tablename__ = "tb_heroku_server"
+    id = db.Column(db.Integer, primary_key = True) 
+    R_HEEL = db.Column(db.Integer)  
+    R_THUMB = db.Column(db.Integer)
+    R_INNER_BALL = db.Column(db.Integer)
+    R_OUTER_BALL = db.Column(db.Integer)
+    L_HEEL = db.Column(db.Integer)
+    L_THUMB = db.Column(db.Integer)
+    L_INNER_BALL = db.Column(db.Integer)
+    L_OUTER_BALL = db.Column(db.Integer)
+    TIME = db.Column(db.String(20))
+    NAME = db.Column(db.String(20))
     
-    def __init__(self, status, time, name): 
-        self.status = status 
-        self.time = time
-        self.name = name
-        
+    def __init__(self, R_HEEL, R_THUMB, R_INNER_BALL, R_OUTER_BALL, L_HEEL, L_THUMB, L_INNER_BALL, L_OUTER_BALL, TIME, NAME): 
+        self.R_HEEL = R_HEEL
+        self.R_THUMB = R_THUMB
+        self.R_INNER_BALL = R_INNER_BALL
+        self.R_OUTER_BALL = R_OUTER_BALL
+        self.L_HEEL = L_HEEL
+        self.L_THUMB = L_THUMB
+        self.L_INNER_BALL = L_INNER_BALL
+        self.L_OUTER_BALL = L_OUTER_BALL
+        self.TIME = TIME
+        self.NAME = NAME
+
     def __repr__(self):
         return '<id %r>' % self.id
             
@@ -39,6 +57,8 @@ def prreq():
     input_json = request.get_json(force=True)
     method_status = input_json['METHOD']
     
+    print('Calling method:', method_status)
+
     # Create table
     if method_status == 'CREATE':
         status_ = createTable()  
@@ -49,50 +69,70 @@ def prreq():
     
     # Delete data
     if method_status == 'DELETE':
-        status_ = deleteData()
-        
-    # Delete by time
-    if method_status == 'DEL_BY_TIME':
-        status_ = deleteByTime(input_json)
-        
+        status_ = deleteData() 
+  
     # View data
     if method_status == 'VIEW':
-        data_length, id, status, time, name = viewData() 
+        data_length, id, R_HEEL, R_THUMB, R_INNER_BALL, R_OUTER_BALL, L_HEEL, L_THUMB, L_INNER_BALL, L_OUTER_BALL, TIME, NAME = viewData() 
         if data_length != 0:
             status_ = []
             for i in range(data_length):
-                status_.append([{'DATA_INDEX':i, 'STATUS':status[i], 'TIME':time[i], 'NAME':name[i]}])
-            status_ = {'STATUS':status_}
+                status_.append([
+                	{
+                		'DATA_INDEX':i, 
+                        'ID': id,
+                		'R_HEEL' : R_HEEL[i], 
+					    'R_THUMB' : R_THUMB[i],
+					    'R_INNER_BALL' : R_INNER_BALL[i],
+					    'R_OUTER_BALL' : R_OUTER_BALL[i],
+					    'L_HEEL' : L_HEEL[i],
+					    'L_THUMB' : L_THUMB[i],
+					    'L_INNER_BALL' : L_INNER_BALL[i],
+					    'L_OUTER_BALL' : L_OUTER_BALL[i],
+					    'TIME' : TIME[i],
+					    'NAME' : NAME[i]
+                	}
+                ])
+            status_ = {'STATUS': status_}
         else:
-            status_ = {'STATUS':'EMPTY'} 
-            
-    # Get tag list
-    if method_status == 'TAG_LIST':
-        status_ = tagNameList() 
+            status_ = {'STATUS': 'EMPTY'} 
+ 
+    print('Status:', status_)
         
     return jsonify(status_) 
 
 def createTable():
     try: 
         db.create_all()
-        status_ = {'STATUS':'CREATE_TABLE_OK'}
+        status_ = {'STATUS': 'CREATE_TABLE_OK'}
         return status_
     except: 
-        status_ = {'STATUS':'CREATE_TABLE_NO'}
+        status_ = {'STATUS': 'CREATE_TABLE_NO'}
         return status_
     
 def insertData(input_json):
-    try: 
-        if checkInsert(input_json) == True:
-            db.session.add(Database(input_json['STATUS'], input_json['TIME'], input_json['NAME']))
-            db.session.commit()
-            status_ = {'STATUS':'INSERT_DATA_OK'}
-        else:
-            status_ = {'STATUS':'INSERT_DATA_NO'}
-            
+    try:  
+        db.session.add(
+        	Database(
+        		input_json['R_HEEL'], 
+        		input_json['R_THUMB'], 
+        		input_json['R_INNER_BALL'],
+        		input_json['R_OUTER_BALL'],
+        		input_json['L_HEEL'],
+        		input_json['L_THUMB'],
+        		input_json['L_INNER_BALL'], 
+        		input_json['L_OUTER_BALL'], 
+        		input_json['TIME'], 
+        		input_json['NAME']  
+        	)
+        )
+
+        db.session.commit()
+        status_ = {'STATUS': 'INSERT_DATA_OK'}
+          
         return status_
     except:
-        status_ = {'STATUS':'INSERT_DATA_NO'}
+        status_ = {'STATUS': 'INSERT_DATA_NO'}
         return status_
             
 def deleteData():
@@ -102,77 +142,44 @@ def deleteData():
             data = Database.query.filter_by(id=i.id).first()
             db.session.delete(data) 
         db.session.commit()
-        status_ = {'STATUS':'DELETE_DATA_OK'}
+        status_ = {'STATUS': 'DELETE_DATA_OK'}
         return status_
     except: 
-        status_ = {'STATUS':'DELETE_DATA_NO'}
-        return status_
-    
-def deleteByTime(input_json):
-    try: 
-        condition = input_json['TIME']
-        n = input_json['NAME']
-        data = Database.query.all()
-        for i in data:  
-            if i.time == condition and i.name == n:
-                data = Database.query.filter_by(id=i.id).first() 
-                db.session.delete(data) 
-        db.session.commit()
-        status_ = {'STATUS':'DELETE_BY_TIME_YES'}
-        return status_
-    except Exception as e: 
-        status_ = {'STATUS':'DELETE_BY_TIME_NO'}
-        return status_
+        status_ = {'STATUS': 'DELETE_DATA_NO'}
+        return status_ 
 
 def viewData():
     try:  
         data = Database.query.all() 
         id = []
-        status = [] 
-        time = []
-        name = []
+        R_HEEL = []
+        R_THUMB = []
+        R_INNER_BALL = []
+        R_OUTER_BALL = []
+        L_HEEL = []
+        L_THUMB = []
+        L_INNER_BALL = []
+        L_OUTER_BALL = []
+        TIME = []
+        NAME = []
         for i in data: 
             id.append(i.id)
-            status.append(i.status) 
-            time.append(i.time)  
-            name.append(i.name)
-        
-        return len(id), id, status, time, name
-    
-    except:
-        return 'EMPTY'
+            R_HEEL.append(i.R_HEEL)
+            R_THUMB.append(i.R_THUMB)
+            R_INNER_BALL.append(i.R_INNER_BALL)
+            R_OUTER_BALL.append(i.R_OUTER_BALL)
+            L_HEEL.append(i.L_HEEL)
+            L_THUMB.append(i.L_THUMB)
+            L_INNER_BALL.append(i.L_INNER_BALL)
+            L_OUTER_BALL.append(i.L_OUTER_BALL)
+            TIME.append(i.TIME)
+            NAME.append(i.NAME)
 
-def checkInsert(input_json):
-    try: 
-        t = input_json['TIME']  
-        s = input_json['STATUS']
-        n = input_json['NAME']
-        data = Database.query.all() 
-        id = [] 
-        for i in data:
-            if i.time == t and i.status == s and i.name == n:
-                id.append(i.id) 
-         
-        if len(id) != 0:
-            return False
-        else:
-            return True 
-    except:
-        return False
-
-def tagNameList():
-    try:  
-        data = Database.query.all()  
-        name = []
-        for i in data:  
-            name.append(i.name)
+        return len(id), id, R_HEEL, R_THUMB, R_INNER_BALL, R_OUTER_BALL, L_HEEL, L_THUMB, L_INNER_BALL, L_OUTER_BALL, TIME, NAME
         
-        if len(name) > 0:
-            return {'STATUS':list(set(name))} # Applied distinction
-        else:
-            return {'STATUS':'EMPTY'}
     except:
-        return {'STATUS':'EMPTY'} 
+        return 'EMPTY' 
+ 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
